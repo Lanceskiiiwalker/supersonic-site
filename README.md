@@ -7,6 +7,8 @@ index.html            Home page (hub): hero, plugin grid, about
 og-image.png          Link preview image for the home page
 favicon.svg           Browser tab icon
 CNAME                 Custom domain (www.soundingsonics.com), don't delete
+machmaster/           Machmaster page -> soundingsonics.com/machmaster/
+                        (same files as supersonic/; checkout link is BUY_URL near the bottom of index.html)
 supersonic/           Supersonic page -> soundingsonics.com/supersonic/
   index.html            Sales page with the playable synth
   og-image.png          Link preview image

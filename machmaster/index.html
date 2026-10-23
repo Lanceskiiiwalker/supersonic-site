@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Machmaster: Mastering Suite for Mac</title>
+<meta name="description" content="Machmaster is a mastering suite for Mac (AU, VST3, Standalone): EQ, exciter, multiband dynamics, stereo imager and a true-peak maximizer with loudness meters. Try it free in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Machmaster: Mastering Suite for Mac">
+<meta property="og:description" content="EQ, exciter, multiband dynamics, imager and a true-peak maximizer in one plugin. AU, VST3 and Standalone for macOS. Master a track in your browser right now.">
+<meta property="og:image" content="https://www.soundingsonics.com/machmaster/og-image.png">
+<meta property="og:url" content="https://www.soundingsonics.com/machmaster/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>html{color-scheme:dark}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Alegreya+SC:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+/* Layout: a painted dusk-desert sky band behind the header and rack, rough torn-edge panels below on a plum night ground;
+   workspace left, meter column right; stacks on phones. Single deliberate dark look (matches the plugin). */
+:root {
+  --bg: #140c17;
+  --panel: #1f1423;
+  --panel2: #2a1c2f;
+  --edge: #3d2b42;
+  --text: #f3e8ef;
+  --dim: #ad98a8;
+  --faint: #67536a;
+  --accent: #ff7a1a;
+  --amber: #ffc23d;
+  --slate: #6a7a99;
+  --low: #ff5d3a; --mid: #ffb23d; --high: #59d6c6;
+  --hot: #ff4d4d;
+  --display: "Luckiest Guy", "Arial Black", Impact, sans-serif;
+  --sc: "Alegreya SC", "Palatino Linotype", Georgia, serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --label: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--bg); color: var(--text); }
+body { font-family: var(--body); font-size: 14px; margin: 0; background: var(--bg); line-height: 1.5; }
+.app { position: relative; z-index: 1; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
+.app { max-width: 1240px; margin: 0 auto; display: grid; gap: 12px; }
+
+/* header */
+header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-block: 4px 6px; }
+.brand { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+.brand svg { flex: none; }
+.brand h1 { font-family: var(--display); font-weight: 400; font-size: 38px; letter-spacing: .02em; margin: 0; line-height: 1; display: flex; }
+.brand h1 span { display: inline-block; background: linear-gradient(180deg, var(--amber), var(--accent) 70%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-stroke: 1.5px #2a0d06; paint-order: stroke fill; filter: drop-shadow(0 3px 0 #2a0d06) drop-shadow(0 0 14px rgba(255,122,26,.35)); }
+.brand small { display: block; font-family: var(--sc); font-weight: 700; font-size: 15px; letter-spacing: .1em; color: var(--text); margin-top: 4px; text-align: center; }
+.transport, .presetbox { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  border: 1px solid var(--edge); background: rgba(42,28,47,.85); border-radius: 8px;
+  padding: 8px 14px; cursor: pointer; font-family: var(--sc); font-weight: 800; font-size: 14px; letter-spacing: .05em;
+  color: var(--text); display: inline-flex; align-items: center; gap: 8px; min-height: 36px;
+}
+.btn:hover { border-color: var(--dim); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #140800; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn[aria-pressed="true"].ab { background: rgba(255,77,77,.16); border-color: var(--hot); color: var(--hot); }
+.btn.small { padding: 4px 10px; min-height: 28px; font-size: 12px; }
+select {
+  background: var(--panel2); color: var(--text); border: 1px solid var(--edge); border-radius: 8px;
+  padding: 8px 12px; font-family: var(--body); font-weight: 600; font-size: 14px; min-height: 36px; min-width: 0; max-width: 220px;
+}
+.trackname { font-size: 12px; color: var(--text); opacity: .75; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+input[type=file] { display: none; }
+
+/* rack */
+.rack { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; }
+.card {
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 10px; min-height: 48px;
+  padding: 6px 8px 6px 10px; cursor: pointer; min-width: 0;
+}
+.card::before { background: rgba(31,20,35,.88); }
+.card[aria-selected="true"]::before { border-color: var(--accent); background: rgba(42,28,47,.94); box-shadow: 0 0 18px rgba(255,122,26,.25); }
+.card .name { font-family: var(--sc); font-weight: 800; font-size: 14px; letter-spacing: .06em; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card.off .name { color: var(--dim); }
+.card .slot { position: absolute; top: 4px; right: 8px; font-family: var(--label); font-size: 10px; color: var(--faint); letter-spacing: .1em; }
+.power {
+  width: 22px; height: 22px; border-radius: 50%; border: 1.6px solid var(--faint); background: none; cursor: pointer; flex: none; position: relative; padding: 0;
+}
+.power::after { content: ""; position: absolute; left: 50%; top: 2px; width: 1.6px; height: 8px; background: currentColor; transform: translateX(-50%); color: var(--faint); }
+.card:not(.off) .power { border-color: var(--accent); background: rgba(255,122,26,.2); }
+.card:not(.off) .power::after { color: var(--accent); }
+.arrows { display: flex; gap: 2px; flex: none; }
+.arrows button { background: none; border: 0; color: var(--dim); cursor: pointer; padding: 6px 4px; font-weight: 700; font-size: 13px; }
+.arrows button:disabled { color: var(--edge); cursor: default; }
+
+/* main */
+.workspace { display: grid; grid-template-columns: minmax(0,1fr) 220px; gap: 12px; align-items: start; }
+.panel { position: relative; isolation: isolate; min-width: 0; }
+.panel::before, .card::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--panel); border: 1.5px solid var(--edge); border-radius: 12px; filter: url(#rough); }
+.panel::after { content: ""; position: absolute; inset: 3px; z-index: -1; border-radius: 10px; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(255,194,61,.05), transparent 60%); }
+.view { display: grid; gap: 10px; min-width: 0; }
+.graphwrap { position: relative; height: 330px; }
+.graphwrap canvas { position: absolute; inset: 6px; width: calc(100% - 12px); height: calc(100% - 12px); display: block; touch-action: none; border-radius: 8px; }
+.graph-title { position: absolute; left: 16px; top: 10px; font-family: var(--sc); font-weight: 700; font-size: 14px; letter-spacing: .05em; color: var(--dim); pointer-events: none; }
+.offmask { position: absolute; inset: 6px; display: grid; place-items: center; background: rgba(20,12,23,.55); border-radius: 8px; font-family: var(--sc); font-weight: 700; letter-spacing: .04em; font-size: 15px; color: var(--dim); text-align: center; padding: 16px; }
+.strip { padding: 12px; display: grid; gap: 8px; }
+.groups { display: grid; gap: 8px; }
+.group { display: grid; gap: 4px; min-width: 0; }
+.group h3 { margin: 0; font-family: var(--sc); font-weight: 800; font-size: 15px; letter-spacing: .05em; text-align: center; }
+.krow { display: flex; justify-content: center; flex-wrap: wrap; gap: 2px 4px; }
+.hint { font-size: 12px; color: var(--faint); text-align: center; }
+
+/* knob */
+.knob { display: grid; justify-items: center; gap: 0; width: 64px; user-select: none; -webkit-user-select: none; }
+.knob.big { width: 132px; }
+.knob .kl { font-family: var(--sc); font-weight: 700; font-size: 13px; letter-spacing: .04em; color: var(--text); white-space: nowrap; }
+.knob svg { width: 54px; height: 54px; cursor: ns-resize; touch-action: none; overflow: visible; }
+.knob.big svg { width: 120px; height: 120px; }
+.knob .val { filter: drop-shadow(0 0 3px currentColor); }
+.knob .kv { font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; border: 1px solid var(--edge); background: var(--panel2); border-radius: 4px; padding: 1px 7px; margin-top: 2px; }
+.knob.big .kv { font-size: 14px; padding: 2px 10px; }
+
+.pill { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 6px 14px 6px 10px; background: var(--panel2); border: 1px solid var(--edge); cursor: pointer; font-family: var(--sc); font-weight: 800; letter-spacing: .06em; font-size: 13px; color: var(--dim); }
+.pill::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--faint); }
+.pill[aria-pressed="true"] { color: var(--text); border-color: var(--accent); background: rgba(255,122,26,.14); }
+.pill[aria-pressed="true"]::before { background: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--edge); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: var(--panel2); padding: 8px 14px; cursor: pointer; font-family: var(--sc); font-weight: 800; letter-spacing: .05em; font-size: 14px; color: var(--dim); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #140800; }
+
+.grbar { height: 16px; border-radius: 4px; background: var(--panel2); position: relative; overflow: hidden; font-size: 10px; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.grbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); width: 0; }
+.grbar span { position: relative; }
+
+/* imager + max side-by-side blocks */
+.split2 { display: grid; grid-template-columns: minmax(0,1fr) 280px; gap: 10px; }
+.scopewrap { position: relative; height: 330px; }
+.scopewrap canvas { position: absolute; inset: 6px; width: calc(100% - 12px); height: calc(100% - 12px); border-radius: 8px; }
+.maxgrid { display: grid; grid-template-columns: 280px minmax(0,1fr); gap: 10px; }
+.maxctl { padding: 16px; display: grid; justify-items: center; gap: 12px; align-content: start; }
+.histwrap { position: relative; height: 420px; }
+.histwrap canvas { position: absolute; inset: 6px; width: calc(100% - 12px); height: calc(100% - 12px); border-radius: 8px; }
+
+/* meters */
+.meters { padding: 14px; display: grid; gap: 14px; }
+.meterwrap { position: relative; height: 230px; }
+.meterwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lufs { display: grid; gap: 4px; }
+.lufs .lh { display: flex; justify-content: space-between; align-items: center; font-family: var(--sc); font-weight: 800; letter-spacing: .04em; font-size: 14px; color: var(--text); }
+.lrow { display: flex; justify-content: space-between; align-items: baseline; font-variant-numeric: tabular-nums; }
+.lrow span { font-family: var(--sc); font-weight: 700; letter-spacing: .04em; font-size: 13px; color: var(--dim); }
+.lrow b { font-weight: 600; font-size: 16px; }
+.lrow.int b { font-family: var(--display); font-weight: 400; font-size: 28px; color: var(--accent); text-shadow: 0 0 14px rgba(255,122,26,.4); }
+.lrow b.over { color: var(--hot); }
+.target { font-size: 11px; color: var(--faint); }
+.iorow { display: flex; justify-content: space-around; }
+.note { font-size: 12px; color: var(--dim); line-height: 1.5; max-width: 70ch; }
+.note b { color: var(--text); font-weight: 600; }
+.status { font-size: 12px; color: var(--amber); min-height: 16px; }
+
+@media (max-width: 960px) {
+  .workspace { grid-template-columns: minmax(0,1fr); }
+  .meters { grid-template-columns: 1fr 1fr; }
+  .meterwrap { grid-row: span 2; }
+}
+@media (max-width: 760px) {
+  .rack { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .split2, .maxgrid { grid-template-columns: minmax(0,1fr); }
+  .graphwrap { height: 250px; }
+  .scopewrap { height: 280px; }
+  .histwrap { height: 260px; }
+  .groups { grid-template-columns: 1fr 1fr !important; }
+  .meters { grid-template-columns: minmax(0,1fr); }
+  .meterwrap { grid-row: auto; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---- sales page ---- */
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.snav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(20,12,23,.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--edge); }
+.snav .wrap { display: flex; align-items: center; gap: 18px; padding-block: 10px; }
+.snav .wm { margin-right: auto; font-family: var(--sc); font-weight: 800; font-size: 16px; display: flex; gap: 8px; align-items: center; }
+.snav .wm a { color: var(--dim); text-decoration: none; }
+.snav .wm a:hover { color: var(--text); }
+.snav .crumb { color: var(--faint); }
+.snav a.l { color: var(--dim); text-decoration: none; font-family: var(--sc); font-weight: 700; font-size: 15px; }
+.snav a.l:hover { color: var(--text); }
+.buy { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #140800; font-family: var(--sc); font-weight: 800; font-size: 17px; letter-spacing: .03em;
+  padding: 10px 20px; border-radius: 999px; text-decoration: none; box-shadow: 0 0 24px rgba(255,122,26,.35); white-space: nowrap; }
+.buy:hover { filter: brightness(1.08); }
+.buy.sm { font-size: 14px; padding: 7px 14px; box-shadow: none; }
+.ghostbtn { display: inline-flex; align-items: center; font-family: var(--sc); font-weight: 800; font-size: 17px; letter-spacing: .03em; color: var(--text); text-decoration: none;
+  padding: 10px 20px; border-radius: 999px; background: rgba(20,12,23,.55); box-shadow: inset 0 0 0 1px var(--edge); }
+.ghostbtn:hover { background: rgba(42,28,47,.8); }
+.hero { position: relative; overflow: hidden; min-height: clamp(460px, 70vh, 640px); display: flex; align-items: center; }
+.hero #sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap { position: relative; z-index: 1; width: 100%; padding-block: 70px 120px; display: grid; justify-items: start; gap: 14px; }
+.eyebrow { margin: 0; font-family: var(--sc); font-weight: 800; font-size: 16px; letter-spacing: .1em; color: var(--amber); }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 10vw, 120px); line-height: .95; margin: 0; display: flex; flex-wrap: wrap; }
+.hero h1 span { display: inline-block; background: linear-gradient(180deg, var(--amber), var(--accent) 70%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-stroke: 2.5px #2a0d06; paint-order: stroke fill; filter: drop-shadow(0 5px 0 #2a0d06) drop-shadow(0 0 30px rgba(255,122,26,.35)); }
+.hero .lede { margin: 0; font-size: clamp(18px, 2.2vw, 23px); max-width: 40ch; color: var(--text); text-shadow: 0 2px 18px rgba(0,0,0,.6); text-wrap: balance; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.sec { padding-block: 56px; }
+.sec h2.big { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(34px, 5vw, 52px); letter-spacing: .01em; margin: 0; color: var(--text); line-height: 1.05; text-wrap: balance; }
+.sec .sub { color: var(--dim); font-size: 17px; max-width: 60ch; margin: 10px 0 26px; }
+.feat { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.ftile { padding: 22px 22px 20px; display: grid; gap: 8px; align-content: start; }
+.ftile svg { width: 34px; height: 34px; fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(255,122,26,.35)); }
+.ftile h3 { margin: 4px 0 0; font-family: var(--sc); font-weight: 800; font-size: 21px; letter-spacing: .02em; }
+.ftile p { margin: 0; color: var(--dim); font-size: 15px; }
+.demo-note { color: var(--dim); font-size: 15px; margin: -10px 0 18px; }
+.specs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.specs dl { margin: 0; padding: 10px 22px; }
+.specs .r { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; padding-block: 12px; border-bottom: 1px solid var(--edge); }
+.specs .r:last-child { border-bottom: 0; }
+.specs dt { font-family: var(--sc); font-weight: 800; color: var(--amber); font-size: 15px; }
+.specs dd { margin: 0; color: var(--text); font-size: 15px; min-width: 0; }
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq details { padding: 4px 22px; }
+.faq summary { cursor: pointer; padding-block: 14px; font-family: var(--sc); font-weight: 800; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.faq summary::after { content: "+"; color: var(--accent); font-family: var(--body); font-weight: 600; }
+.faq details[open] summary::after { content: "–"; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq p, .faq ol { margin: 0 0 16px; color: var(--dim); font-size: 15px; }
+.faq code { font-size: 13px; color: var(--text); background: var(--panel2); padding: 1px 6px; border-radius: 4px; word-break: break-all; }
+.final { text-align: center; padding-block: 64px 80px; display: grid; justify-items: center; gap: 12px; }
+.final h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(38px, 6vw, 64px); margin: 0; color: var(--amber); text-shadow: 0 4px 0 #2a0d06; }
+.final p { margin: 0 0 8px; color: var(--dim); font-size: 17px; }
+.final .price { font-family: var(--display); font-size: 40px; color: var(--text); }
+.foot { border-top: 1px solid var(--edge); }
+.foot .wrap { padding-block: 22px 30px; display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: space-between; color: var(--faint); font-size: 13px; }
+.foot a { color: inherit; text-decoration: none; }
+.foot a:hover { color: var(--text); }
+@media (max-width: 640px) { .snav a.l { display: none; } .specs .r { grid-template-columns: minmax(0,1fr); gap: 2px; } }
+</style>
+</head>
+<body>
+<nav class="snav" aria-label="Site"><div class="wrap">
+ <span class="wm"><a href="/">Sounding Sonics</a><span class="crumb">/</span>Machmaster</span>
+ <a class="l" href="#features">Features</a><a class="l" href="#demo">Try it</a><a class="l" href="#faq">FAQ</a>
+ <a class="buy sm" href="#buy" data-buy>Buy · $59</a>
+</div></nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+<header class="hero">
+ <canvas id="sky" aria-hidden="true"></canvas>
+ <div class="wrap">
+  <p class="eyebrow">✦ Mastering Suite for Mac ✦</p>
+  <h1 aria-label="Machmaster" id="wordmark">MACHMASTER</h1>
+  <p class="lede">Take a finished mix to release-ready loudness: EQ, exciter, multiband dynamics, stereo imaging and a true-peak limiter in one plugin.</p>
+  <div class="ctas"><a class="buy" href="#buy" data-buy>Buy for $59</a><a class="ghostbtn" href="#demo">Master a track in your browser</a></div>
+ </div>
+</header>
+
+<section class="sec" id="features"><div class="wrap">
+ <h2 class="big">Five modules, one chain</h2>
+ <p class="sub">Put the modules in any order, switch each one on or off, and watch every move on a live analyzer.</p>
+ <div class="feat">
+  <div class="panel ftile"><svg viewBox="0 0 32 32"><path d="M3 20c4 0 4-9 8-9s4 12 8 12 4-8 10-8"/><circle cx="11" cy="11" r="2.4"/><circle cx="19" cy="23" r="2.4"/></svg><h3>Equalizer</h3><p>Low cut, low and high shelves and three bells. Drag the nodes right on the spectrum and scroll to set Q.</p></div>
+  <div class="panel ftile"><svg viewBox="0 0 32 32"><path d="M4 22c3-10 5-10 8 0s5 10 8 0 5-10 8 0"/><path d="M4 16h24" opacity=".35"/></svg><h3>Exciter</h3><p>Three-band saturation with Warm, Tube and Tape characters. Add weight to the low end or air to the top, band by band.</p></div>
+  <div class="panel ftile"><svg viewBox="0 0 32 32"><path d="M5 26V12M11 26V8M17 26V14M23 26V10"/><path d="M3 18h26" stroke-dasharray="2 3"/></svg><h3>Multiband dynamics</h3><p>A three-band compressor with phase-coherent crossovers, so you can tame a boomy low end without dulling the vocal.</p></div>
+  <div class="panel ftile"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M16 5v22M5 16h22" opacity=".4"/><path d="M10 10l12 12M22 10L10 22"/></svg><h3>Imager</h3><p>Set stereo width per band from mono to extra wide. A vectorscope and correlation meter show what you are doing.</p></div>
+  <div class="panel ftile"><svg viewBox="0 0 32 32"><path d="M4 9h24" /><path d="M4 26c3-14 5-17 7-17s3 8 5 8 3-8 5-8 4 3 7 17"/></svg><h3>Maximizer</h3><p>A look-ahead brickwall limiter with true-peak detection holds your ceiling, so streaming services do not clip your master.</p></div>
+  <div class="panel ftile"><svg viewBox="0 0 32 32"><path d="M8 26V14M14 26V6M20 26V10M26 26V18"/></svg><h3>Loudness meters</h3><p>Integrated, short-term and momentary LUFS with peak max, so you can hit −14 LUFS for streaming or go louder for the club.</p></div>
+ </div>
+</div></section>
+
+<section class="sec" id="demo" style="padding-top:20px"><div class="wrap">
+ <h2 class="big">Master a track right here</h2>
+ <p class="sub">This is the real Machmaster engine running in your browser. Load one of your own mixes or play the demo loop, pick a preset and use Bypass to compare.</p>
+ <p class="demo-note">Your track never leaves your device.</p>
+</div>
+<div class="wrap">
+<div class="app">
+  <header class="top">
+    
+    <div class="transport">
+      <button class="btn primary" id="play" type="button">▶ Play demo loop</button>
+      <button class="btn" id="load" type="button">Load your track</button>
+      <input type="file" id="file" accept="audio/*">
+      <button class="btn ab" id="bypass" type="button" aria-pressed="false" title="Hear the unprocessed mix (level matched to the same delay)">Bypass</button>
+      <span class="trackname" id="trackname">Demo loop · 120 BPM</span>
+    </div>
+    <div class="presetbox">
+      <button class="btn small" id="prevP" type="button" aria-label="Previous preset">‹</button>
+      <select id="preset" aria-label="Preset"></select>
+      <button class="btn small" id="nextP" type="button" aria-label="Next preset">›</button>
+    </div>
+  </header>
+  <div class="status" id="status"></div>
+
+  <nav class="rack" id="rack" aria-label="Signal chain"></nav>
+
+  <div class="workspace">
+    <main id="views"></main>
+    <aside class="panel meters" aria-label="Meters">
+      <div class="meterwrap" id="meterWrap"></div>
+      <div class="lufs">
+        <div class="lh">Loudness (LUFS) <button class="btn small" id="resetL" type="button">Reset</button></div>
+        <div class="lrow int"><span>Integrated</span><b id="lI">--</b></div>
+        <div class="lrow"><span>Short-term</span><b id="lS">--</b></div>
+        <div class="lrow"><span>Momentary</span><b id="lM">--</b></div>
+        <div class="lrow"><span>Peak max</span><b id="lP">--</b></div>
+        <div class="target">Streaming targets ≈ −14 LUFS, peaks under −1 dB</div>
+      </div>
+      <div class="iorow" id="iorow"></div>
+    </aside>
+  </div>
+</div>
+
+
+</div></section>
+
+<section class="sec" id="specs"><div class="wrap">
+ <h2 class="big">Specs</h2>
+ <p class="sub">Everything in the browser demo, plus native performance in your DAW.</p>
+ <div class="specs">
+  <dl class="panel">
+   <div class="r"><dt>Formats</dt><dd>Audio Unit effect, VST3, Standalone app</dd></div>
+   <div class="r"><dt>System</dt><dd>macOS 11 Big Sur or later, Apple silicon and Intel</dd></div>
+   <div class="r"><dt>Hosts</dt><dd>Logic Pro and GarageBand (AU); Ableton Live, FL Studio, Bitwig, Reaper (VST3)</dd></div>
+   <div class="r"><dt>Presets</dt><dd>Gentle Polish, Streaming −14, Loud &amp; Clean, Warm Glue, Wide Air, Club Banger, Mono Bass Fix</dd></div>
+  </dl>
+  <dl class="panel">
+   <div class="r"><dt>Equalizer</dt><dd>24 dB/oct low cut, low and high shelves, three bells</dd></div>
+   <div class="r"><dt>Dynamics</dt><dd>Three bands, Linkwitz-Riley crossovers, soft knee, per-band attack, release and makeup</dd></div>
+   <div class="r"><dt>Maximizer</dt><dd>1.5 ms look-ahead, 4x true-peak detection, ceiling down to −6 dB</dd></div>
+   <div class="r"><dt>Meters</dt><dd>EBU R128 loudness, peak in and out, gain reduction, correlation, vectorscope</dd></div>
+  </dl>
+ </div>
+</div></section>
+
+<section class="sec" id="faq"><div class="wrap">
+ <h2 class="big">Questions</h2>
+ <div class="faq" style="margin-top:22px">
+  <details class="panel"><summary>How do I install it?</summary><ol><li>Unzip the download.</li><li>Copy <code>Machmaster.component</code> to <code>~/Library/Audio/Plug-Ins/Components</code> and <code>Machmaster.vst3</code> to <code>~/Library/Audio/Plug-Ins/VST3</code>.</li><li>Restart your DAW. In Logic, add it to your Stereo Out from Audio FX → Audio Units → Sounding Sonics → Machmaster.</li></ol></details>
+  <details class="panel"><summary>Where does it go in my session?</summary><p>On your master or stereo out, after your mix bus processing. You can also use it on a bounced stereo mix in its own project.</p></details>
+  <details class="panel"><summary>Does it work on Windows?</summary><p>Not yet. Machmaster is Mac-only for now. The browser version on this page runs on any computer.</p></details>
+  <details class="panel"><summary>Which DAWs does it run in?</summary><p>Any Mac host that loads Audio Unit or VST3 effects, including Logic Pro, GarageBand, Ableton Live, FL Studio, Bitwig and Reaper. The Standalone app runs without a DAW.</p></details>
+  <details class="panel"><summary>How do I pay?</summary><p>Checkout is handled by Gumroad, which takes cards and PayPal and sends your download link straight away.</p></details>
+ </div>
+</div></section>
+
+<section class="wrap final" id="buy">
+ <h2>Get Machmaster</h2>
+ <p>AU, VST3 and Standalone for macOS. One payment, yours to keep.</p>
+ <span class="price">$59</span>
+ <a class="buy" href="#buy" data-buy>Buy Machmaster</a>
+</section>
+
+<footer class="foot"><div class="wrap">
+ <span>© 2026 Sounding Sonics</span>
+ <span><a href="/">More from Sounding Sonics</a> · <a href="/supersonic/">Supersonic</a></span>
+</div></footer>
+
+<script id="dsp-shared">
+// ---- shared between page (curves) and worklet (audio) ----
+function bqSet(c,B0,B1,B2,A0,A1,A2){c.b0=B0/A0;c.b1=B1/A0;c.b2=B2/A0;c.a1=A1/A0;c.a2=A2/A0;return c}
+function cf(fs,f){return Math.min(Math.max(f,5),fs*0.45)}
+function bqLP(c,fs,f,q){const w=2*Math.PI*cf(fs,f)/fs,co=Math.cos(w),al=Math.sin(w)/(2*q);return bqSet(c,(1-co)/2,1-co,(1-co)/2,1+al,-2*co,1-al)}
+function bqHP(c,fs,f,q){const w=2*Math.PI*cf(fs,f)/fs,co=Math.cos(w),al=Math.sin(w)/(2*q);return bqSet(c,(1+co)/2,-(1+co),(1+co)/2,1+al,-2*co,1-al)}
+function bqPeak(c,fs,f,q,db){const A=Math.pow(10,db/40),w=2*Math.PI*cf(fs,f)/fs,co=Math.cos(w),al=Math.sin(w)/(2*q);return bqSet(c,1+al*A,-2*co,1-al*A,1+al/A,-2*co,1-al/A)}
+function bqLS(c,fs,f,q,db){const A=Math.pow(10,db/40),w=2*Math.PI*cf(fs,f)/fs,co=Math.cos(w),al=Math.sin(w)/(2*q),sq=2*Math.sqrt(A)*al;
+ return bqSet(c,A*((A+1)-(A-1)*co+sq),2*A*((A-1)-(A+1)*co),A*((A+1)-(A-1)*co-sq),(A+1)+(A-1)*co+sq,-2*((A-1)+(A+1)*co),(A+1)+(A-1)*co-sq)}
+function bqHS(c,fs,f,q,db){const A=Math.pow(10,db/40),w=2*Math.PI*cf(fs,f)/fs,co=Math.cos(w),al=Math.sin(w)/(2*q),sq=2*Math.sqrt(A)*al;
+ return bqSet(c,A*((A+1)+(A-1)*co+sq),-2*A*((A-1)+(A+1)*co),A*((A+1)+(A-1)*co-sq),(A+1)-(A-1)*co+sq,2*((A-1)-(A+1)*co),(A+1)-(A-1)*co-sq)}
+function bqMag(c,fs,f){const w=2*Math.PI*f/fs,c1=Math.cos(w),s1=Math.sin(w),c2=Math.cos(2*w),s2=Math.sin(2*w);
+ const nr=c.b0+c.b1*c1+c.b2*c2,ni=-(c.b1*s1+c.b2*s2),dr=1+c.a1*c1+c.a2*c2,di=-(c.a1*s1+c.a2*s2);
+ return Math.sqrt((nr*nr+ni*ni)/(dr*dr+di*di))}
+function eqDesign(fs,p){const o=[];for(let i=0;i<5;i++)o.push({});
+ bqLS(o[0],fs,p.eqF0,p.eqQ0,p.eqG0);bqPeak(o[1],fs,p.eqF1,p.eqQ1,p.eqG1);bqPeak(o[2],fs,p.eqF2,p.eqQ2,p.eqG2);bqPeak(o[3],fs,p.eqF3,p.eqQ3,p.eqG3);bqHS(o[4],fs,p.eqF4,p.eqQ4,p.eqG4);return o}
+function lcDesign(fs,f){return [bqHP({},fs,f,0.5411961),bqHP({},fs,f,1.30656296)]}
+</script>
+<script id="dsp-worklet" type="text/plain">
+class BQ{constructor(){this.b0=1;this.b1=0;this.b2=0;this.a1=0;this.a2=0;this.z1=0;this.z2=0}
+ copy(c){this.b0=c.b0;this.b1=c.b1;this.b2=c.b2;this.a1=c.a1;this.a2=c.a2}
+ p(x){const y=this.b0*x+this.z1;this.z1=this.b1*x-this.a1*y+this.z2;this.z2=this.b2*x-this.a2*y;return y}}
+class LR4{constructor(){this.s1=new BQ();this.s2=new BQ()}
+ lp(fs,f){const c=bqLP({},fs,f,Math.SQRT1_2);this.s1.copy(c);this.s2.copy(c)}
+ hp(fs,f){const c=bqHP({},fs,f,Math.SQRT1_2);this.s1.copy(c);this.s2.copy(c)}
+ p(x){return this.s2.p(this.s1.p(x))}}
+class Split3{constructor(){this.lp1=new LR4();this.hp1=new LR4();this.lp2=new LR4();this.hp2=new LR4();this.apL=new LR4();this.apH=new LR4();this.o=[0,0,0]}
+ set(fs,f1,f2){this.lp1.lp(fs,f1);this.hp1.hp(fs,f1);this.lp2.lp(fs,f2);this.hp2.hp(fs,f2);this.apL.lp(fs,f2);this.apH.hp(fs,f2)}
+ p(x){const l=this.lp1.p(x),r=this.hp1.p(x),o=this.o;o[0]=this.apL.p(l)+this.apH.p(l);o[1]=this.lp2.p(r);o[2]=this.hp2.p(r);return o}}
+const db2g=d=>Math.pow(10,d*0.05), g2db=g=>g>1e-9?20*Math.log10(g):-180;
+function xo(a,b){a=Math.min(Math.max(a,20),10000);b=Math.min(Math.max(b,a*1.5),18000);return [a,b]}
+const TB=Math.tanh(0.25);
+function sat(m,x){if(m===1)return (Math.tanh(x+0.25)-TB)/(1-TB*TB); if(m===2)return (2/Math.PI)*Math.atan(Math.PI*0.5*x); return Math.tanh(x)}
+
+class Machmaster extends AudioWorkletProcessor{
+ constructor(){super();const fs=sampleRate;this.fs=fs;this.p=null;this.order=[0,1,2,3];this.bypass=false;this.ver=-1;
+  this.eq=[[0,1,2,3,4].map(()=>new BQ()),[0,1,2,3,4].map(()=>new BQ())];this.lc=[[new BQ(),new BQ()],[new BQ(),new BQ()]];
+  this.exS=[new Split3(),new Split3()];this.dyS=[new Split3(),new Split3()];this.imS=[new Split3(),new Split3()];this.xoKey={ex:'',dy:'',im:''};
+  this.dcX=[0,0];this.dcY=[0,0];this.dcR=1-2*Math.PI*10/fs;this.env=[0,0,0];this.mk=[1,1,1];this.wd=[1,1,1];
+  this.smC=Math.exp(-1/(0.02*fs));this.inG=1;this.outG=1;this.mxG=1;this.mxC=Math.exp(-1/(0.015*fs));
+  // maximizer
+  this.R=2048;this.M=this.R-1;this.look=Math.max(8,Math.round(0.0015*fs));this.T=24;this.H=this.T/2-1;this.X=this.T/2;
+  this.aud=[new Float32Array(this.R),new Float32Array(this.R)];this.det=new Float32Array(this.R);this.box=new Float32Array(this.R).fill(1);
+  this.boxSum=this.look;this.envG=1;this.dqV=new Float32Array(this.R);this.dqI=new Float64Array(this.R);this.dqH=0;this.dqT=0;this.pos=0;this.lastSeg=0;
+  this.taps=[];const b0=x=>{let s=1,t=1;for(let k=1;k<30;k++){t*=(x/(2*k))*(x/(2*k));s+=t}return s};
+  for(let ph=0;ph<3;ph++){const fr=(ph+1)*0.25,a=new Float32Array(this.T);let sum=0;for(let j=0;j<this.T;j++){const d=(j-this.H)-fr,r=d/(this.T*0.5);
+   const w=Math.abs(r)<1?b0(4*Math.sqrt(1-r*r))/b0(4):0;const v=Math.sin(Math.PI*d)/(Math.PI*d)*w;a[j]=v;sum+=v}for(let j=0;j<this.T;j++)a[j]/=sum;this.taps.push(a)}
+  this.lat=this.X+this.look-1;this.byp=[new Float32Array(this.R),new Float32Array(this.R)];
+  // loudness
+  {const f0=1681.974450955533,G=3.999843853973347,Q=0.7071752369554196,K=Math.tan(Math.PI*f0/fs),Vh=Math.pow(10,G/20),Vb=Math.pow(Vh,0.4996667741545416),a0=1+K/Q+K*K;
+   this.pre={b0:(Vh+Vb*K/Q+K*K)/a0,b1:2*(K*K-Vh)/a0,b2:(Vh-Vb*K/Q+K*K)/a0,a1:2*(K*K-1)/a0,a2:(1-K/Q+K*K)/a0}}
+  {const f0=38.13547087602444,Q=0.5003270373238773,K=Math.tan(Math.PI*f0/fs),a0=1+K/Q+K*K;this.rlb={b0:1,b1:-2,b2:1,a1:2*(K*K-1)/a0,a2:(1-K/Q+K*K)/a0}}
+  this.kf=[[new BQ(),new BQ()],[new BQ(),new BQ()]];for(const c of this.kf){c[0].copy(this.pre);c[1].copy(this.rlb)}
+  this.sub=Math.round(0.1*fs);this.resetLoud();
+  this.cLL=0;this.cRR=0;this.cLR=0;this.cC=Math.exp(-1/(0.3*fs));
+  this.mt={inL:0,inR:0,outL:0,outR:0,gr:0,b0:0,b1:0,b2:0};this.tick=0;
+  this.port.onmessage=e=>{const d=e.data;if(d.type==='params'){this.p=d.p;this.order=d.order;this.bypass=d.bypass;this.ver++}else if(d.type==='resetLoud')this.resetLoud()};
+ }
+ resetLoud(){this.acc=0;this.accN=0;this.blocks=new Float64Array(30);this.nB=0;this.head=0;this.hC=new Float64Array(750);this.hE=new Float64Array(750);this.M_=-70;this.S_=-70;this.I_=-70;this.tp=-180;
+  if(this.kf)for(const c of this.kf)for(const b of c){b.z1=b.z2=0}}
+ lufs(e){return e>1e-12?-0.691+10*Math.log10(e):-70}
+ pushBlock(){this.blocks[this.head]=this.acc/this.accN;this.head=(this.head+1)%30;this.nB=Math.min(this.nB+1,30);this.acc=0;this.accN=0;
+  const mean=n=>{n=Math.min(n,this.nB);if(n<=0)return 0;let s=0;for(let i=1;i<=n;i++)s+=this.blocks[(this.head-i+30)%30];return s/n};
+  const mE=mean(4);this.M_=Math.max(-70,this.lufs(mE));this.S_=Math.max(-70,this.lufs(mean(30)));
+  if(this.nB>=4){const lu=this.lufs(mE);if(lu>=-70){const b=Math.min(749,Math.max(0,Math.floor((lu+70)*10)));this.hC[b]++;this.hE[b]+=mE}
+   let e=0,c=0;for(let i=0;i<750;i++){e+=this.hE[i];c+=this.hC[i]}
+   if(c>0){const rg=this.lufs(e/c)-10,st=Math.max(0,Math.ceil((rg+70)*10));e=0;c=0;for(let i=st;i<750;i++){e+=this.hE[i];c+=this.hC[i]}this.I_=c>0?Math.max(-70,this.lufs(e/c)):-70}}}
+ updEq(p){if(this.eqVer===this.ver)return;this.eqVer=this.ver;const d=eqDesign(this.fs,p),l=lcDesign(this.fs,p.lcFreq);
+  for(let c=0;c<2;c++){for(let i=0;i<5;i++)this.eq[c][i].copy(d[i]);this.lc[c][0].copy(l[0]);this.lc[c][1].copy(l[1])}}
+ setXo(key,sp,a,b){const [f1,f2]=xo(a,b);const k=f1+'/'+f2;if(this.xoKey[key]!==k){this.xoKey[key]=k;sp[0].set(this.fs,f1,f2);sp[1].set(this.fs,f1,f2)}}
+ segPeak(a,c){let m=0;const M=this.M,H=this.H,T=this.T;for(let ph=0;ph<3;ph++){const t=this.taps[ph];let v=0;for(let j=0;j<T;j++)v+=a[(c-H+j)&M]*t[j];v=Math.abs(v);if(v>m)m=v}return m}
+ process(inputs,outputs){
+  const out=outputs[0];const L=out[0],R=out[1]||out[0];const n=L.length;const inp=inputs[0];const p=this.p;
+  if(!p){L.fill(0);if(out[1])out[1].fill(0);return true}
+  const iL=inp&&inp[0]?inp[0]:null,iR=inp&&inp[1]?inp[1]:iL;
+  for(let s=0;s<n;s++){L[s]=iL?iL[s]:0;R[s]=iR?iR[s]:0}
+  const mt=this.mt,fs=this.fs;
+  // bypass path: delay by the same latency, no processing
+  if(this.bypass){const M=this.M;for(let s=0;s<n;s++){const w=this.pos&M;this.byp[0][w]=L[s];this.byp[1][w]=R[s];const r=(this.pos-this.lat)&M;L[s]=this.byp[0][r];R[s]=this.byp[1][r];this.pos++;
+     const a=Math.abs(L[s]),b=Math.abs(R[s]);if(a>mt.inL)mt.inL=a;if(b>mt.inR)mt.inR=b;if(a>mt.outL)mt.outL=a;if(b>mt.outR)mt.outR=b}
+    this.meter(L,R,n);return true}
+  // input gain
+  const inT=db2g(p.in);for(let s=0;s<n;s++){this.inG=inT+this.smC*(this.inG-inT);L[s]*=this.inG;R[s]*=this.inG;const a=Math.abs(L[s]),b=Math.abs(R[s]);if(a>mt.inL)mt.inL=a;if(b>mt.inR)mt.inR=b}
+  for(const m of this.order){
+   if(m===0&&p.eqOn){this.updEq(p);for(let c=0;c<2;c++){const x=c?R:L,bq=this.eq[c],lc=this.lc[c];for(let s=0;s<n;s++){let v=x[s];if(p.lcOn)v=lc[1].p(lc[0].p(v));for(let i=0;i<5;i++)v=bq[i].p(v);x[s]=v}}}
+   else if(m===1&&p.exOn){this.setXo('ex',this.exS,p.exX1,p.exX2);const dr=[db2g(p.exA0*24),db2g(p.exA1*24),db2g(p.exA2*24)],mix=p.exMix,mode=p.exMode|0;
+    for(let c=0;c<2;c++){const x=c?R:L,sp=this.exS[c];for(let s=0;s<n;s++){const o=sp.p(x[s]);let y=0;for(let b=0;b<3;b++){const w=sat(mode,o[b]*dr[b])/dr[b];y+=o[b]+mix*(w-o[b])}
+      const z=y-this.dcX[c]+this.dcR*this.dcY[c];this.dcX[c]=y;this.dcY[c]=z;x[s]=z}}}
+   else if(m===2&&p.dyOn){this.setXo('dy',this.dyS,p.dyX1,p.dyX2);const at=[],rl=[],mk=[],th=[],ra=[];
+    for(let b=0;b<3;b++){at.push(Math.exp(-1/(0.001*Math.max(p['dyA'+b],0.05)*fs)));rl.push(Math.exp(-1/(0.001*Math.max(p['dyRl'+b],1)*fs)));mk.push(db2g(p['dyM'+b]));th.push(p['dyT'+b]);ra.push(p['dyR'+b])}
+    const kn=6;for(let s=0;s<n;s++){const a=this.dyS[0].p(L[s]),b_=this.dyS[1].p(R[s]);let yl=0,yr=0;
+     for(let b=0;b<3;b++){const lv=Math.max(Math.abs(a[b]),Math.abs(b_[b]));const cc=lv>this.env[b]?at[b]:rl[b];this.env[b]=lv+cc*(this.env[b]-lv);
+      const ov=g2db(this.env[b])-th[b],sl=1/Math.max(ra[b],1)-1;let gr=0;if(2*ov>=-kn){if(2*Math.abs(ov)<=kn){const t=ov+kn/2;gr=sl*t*t/(2*kn)}else gr=sl*ov}
+      if(-gr>mt['b'+b])mt['b'+b]=-gr;this.mk[b]=mk[b]+this.smC*(this.mk[b]-mk[b]);const g=db2g(gr)*this.mk[b];yl+=a[b]*g;yr+=b_[b]*g}
+     L[s]=yl;R[s]=yr}}
+   else if(m===3&&p.imOn){this.setXo('im',this.imS,p.imX1,p.imX2);const wt=[p.imW0,p.imW1,p.imW2];
+    for(let s=0;s<n;s++){const a=this.imS[0].p(L[s]),b_=this.imS[1].p(R[s]);let yl=0,yr=0;for(let b=0;b<3;b++){this.wd[b]=wt[b]+this.smC*(this.wd[b]-wt[b]);const mm=0.5*(a[b]+b_[b]),sd=0.5*(a[b]-b_[b])*this.wd[b];yl+=mm+sd;yr+=mm-sd}L[s]=yl;R[s]=yr}}
+  }
+  // maximizer (always runs for constant latency)
+  {const M=this.M,look=this.look,ceil=db2g(Math.min(p.mxCeil,0)),pre=p.mxOn?db2g(p.mxGain):1,rc=Math.exp(-1/(0.001*Math.max(p.mxRel,1)*fs));let mg=0;
+   for(let s=0;s<n;s++){this.mxG=pre+this.mxC*(this.mxG-pre);const a=L[s]*this.mxG,b=R[s]*this.mxG,pos=this.pos,w=pos&M;
+    this.aud[0][w]=a;this.aud[1][w]=b;this.det[w]=Math.max(Math.abs(a),Math.abs(b));
+    const cur=pos-this.X;let pk=this.det[cur&M];
+    if(p.mxTP){const sg=Math.max(this.segPeak(this.aud[0],cur),this.segPeak(this.aud[1],cur));pk=Math.max(pk,sg,this.lastSeg);this.lastSeg=sg}
+    const req=(p.mxOn&&pk>ceil)?ceil/pk:1;
+    while(this.dqT!==this.dqH&&this.dqV[(this.dqT-1)&M]>=req)this.dqT--;
+    this.dqV[this.dqT&M]=req;this.dqI[this.dqT&M]=pos;this.dqT++;
+    while(this.dqI[this.dqH&M]<=pos-look)this.dqH++;
+    const h=this.dqV[this.dqH&M];this.envG=h<this.envG?h:h+rc*(this.envG-h);
+    this.boxSum+=this.envG-this.box[(pos-look)&M];this.box[pos&M]=this.envG;
+    const g=Math.min(1,this.boxSum/look);const r=(pos-this.lat)&M;let oL=this.aud[0][r]*g,oR=this.aud[1][r]*g;
+    if(p.mxOn){oL=Math.min(Math.max(oL,-ceil),ceil);oR=Math.min(Math.max(oR,-ceil),ceil)}
+    L[s]=oL;R[s]=oR;const gd=-g2db(g);if(gd>mg)mg=gd;this.pos++}
+   if((this.pos&65535)<n){let sum=0;for(let k=0;k<look;k++)sum+=this.box[(this.pos-1-k)&M];this.boxSum=sum}
+   if(mg>mt.gr)mt.gr=mg}
+  const oT=db2g(p.out);for(let s=0;s<n;s++){this.outG=oT+this.smC*(this.outG-oT);L[s]*=this.outG;R[s]*=this.outG;if(!isFinite(L[s]))L[s]=0;if(!isFinite(R[s]))R[s]=0;
+   const a=Math.abs(L[s]),b=Math.abs(R[s]);if(a>mt.outL)mt.outL=a;if(b>mt.outR)mt.outR=b}
+  this.meter(L,R,n);return true}
+ meter(L,R,n){const mt=this.mt,kf=this.kf;
+  for(let s=0;s<n;s++){const l=kf[0][1].p(kf[0][0].p(L[s])),r=kf[1][1].p(kf[1][0].p(R[s]));this.acc+=l*l+r*r;if(++this.accN>=this.sub)this.pushBlock();
+   const c=this.cC;this.cLL=L[s]*L[s]+c*(this.cLL-L[s]*L[s]);this.cRR=R[s]*R[s]+c*(this.cRR-R[s]*R[s]);this.cLR=L[s]*R[s]+c*(this.cLR-L[s]*R[s])}
+  this.tp=Math.max(this.tp,g2db(Math.max(mt.outL,mt.outR)));
+  if(++this.tick>=4){this.tick=0;const den=Math.sqrt(this.cLL*this.cRR);
+   this.port.postMessage({...mt,M:this.M_,S:this.S_,I:this.I_,tp:this.tp,corr:den>1e-9?Math.max(-1,Math.min(1,this.cLR/den)):1});
+   for(const k in mt)mt[k]=0}}
+}
+registerProcessor('machmaster',Machmaster);
+</script>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const C = { bg:'#140c17', panel:'#170f1b', panel2:'#2a1c2f', edge:'#3d2b42', text:'#f3e8ef', dim:'#ad98a8', faint:'#67536a',
+  accent:'#ff7a1a', amber:'#ffc23d', slate:'#9a7fa6', band:['#ff5d3a','#ffb23d','#59d6c6'], hot:'#ff4d4d',
+  node:['#9aa3b5','#ff5d3a','#ff9a3d','#ffc23d','#59d6c6','#6fa8ff'] };
+
+// ---------- painted dusk sky ----------
+{ const wm = $('#wordmark'), rot = [-4, 2, -2, 3, -3, 2, -2, 4, -3, 2];
+  wm.innerHTML = [...'MACHMASTER'].map((ch, i) => `<span aria-hidden="true" style="transform:rotate(${rot[i]}deg) translateY(${i % 2 ? 2 : -1}px)">${ch}</span>`).join(''); }
+function drawSky() {
+  const c = $('#sky'), dpr = Math.min(2, window.devicePixelRatio || 1), w = c.clientWidth, h = c.clientHeight;
+  c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  let seed = 20261023; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  const sky = g.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, '#0f0816'); sky.addColorStop(.42, '#24122e'); sky.addColorStop(.66, '#4a2142'); sky.addColorStop(.8, '#8a3a44'); sky.addColorStop(.88, '#c25a3c');
+  g.fillStyle = sky; g.fillRect(0, 0, w, h);
+  // milky way: soft mauve clouds along a diagonal band
+  for (let i = 0; i < 70; i++) { const t = rnd(), x = t * w * 1.1 - w * .05, y = h * (.62 - .5 * t) + (rnd() - .5) * 46, r = 30 + rnd() * 70;
+    const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(205,160,215,${.035 + rnd() * .04})`); gr.addColorStop(1, 'rgba(205,160,215,0)');
+    g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
+  for (let i = 0; i < 900; i++) { const t = rnd(), x = t * w, y = h * (.62 - .5 * t) + (rnd() + rnd() + rnd() - 1.5) * 40;
+    g.fillStyle = `rgba(255,240,250,${.15 + rnd() * .5})`; g.fillRect(x, y, .8, .8); }
+  for (let i = 0; i < Math.round(w / 4); i++) { const x = rnd() * w, y = rnd() * h * .72, r = rnd() < .08 ? 1.3 : .4 + rnd() * .6;
+    g.fillStyle = `rgba(255,${230 + rnd() * 25},${235 + rnd() * 20},${.3 + rnd() * .6})`; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+    if (r > 1.2) { g.strokeStyle = 'rgba(255,230,240,.35)'; g.beginPath(); g.moveTo(x - 4, y); g.lineTo(x + 4, y); g.moveTo(x, y - 4); g.lineTo(x, y + 4); g.stroke(); } }
+  // jet with contrail and shock diamonds, climbing to the right
+  { const jx = Math.min(w - 60, Math.max(w * .72, 300)), jy = h * .3, ang = -0.2; g.save(); g.translate(jx, jy); g.rotate(ang);
+    const tr = g.createLinearGradient(-Math.min(520, w * .6), 0, -10, 0); tr.addColorStop(0, 'rgba(255,220,235,0)'); tr.addColorStop(1, 'rgba(255,220,235,.55)');
+    g.strokeStyle = tr; g.lineWidth = 2; g.beginPath(); g.moveTo(-Math.min(520, w * .6), 3); g.lineTo(-12, 0); g.stroke();
+    for (let k = 0; k < 4; k++) { const dx = -16 - k * 11, s = 5.5 - k * 1.1; g.shadowColor = '#ff7a1a'; g.shadowBlur = 10;
+      g.fillStyle = k ? `rgba(255,${160 + k * 20},80,${.9 - k * .18})` : '#ffe2a0'; g.beginPath(); g.moveTo(dx - s, 0); g.lineTo(dx, -s * .6); g.lineTo(dx + s, 0); g.lineTo(dx, s * .6); g.closePath(); g.fill(); }
+    g.shadowBlur = 0; g.fillStyle = '#120a16'; g.strokeStyle = 'rgba(255,194,61,.5)'; g.lineWidth = .8;
+    g.beginPath(); g.moveTo(18, 0); g.lineTo(-6, -2); g.lineTo(-12, -9); g.lineTo(-9, -1.5); g.lineTo(-11, 0); g.lineTo(-9, 1.5); g.lineTo(-12, 9); g.lineTo(-6, 2); g.closePath(); g.fill(); g.stroke();
+    g.restore(); }
+  // dusk glow on the horizon
+  const glow = g.createRadialGradient(w * .3, h * .9, 0, w * .3, h * .9, w * .6); glow.addColorStop(0, 'rgba(255,140,60,.35)'); glow.addColorStop(1, 'rgba(255,140,60,0)');
+  g.fillStyle = glow; g.fillRect(0, 0, w, h);
+  // two layers of desert mesas
+  const mesa = (base, col, amp, step) => { g.fillStyle = col; g.beginPath(); g.moveTo(0, h); let x = 0, y = base;
+    g.lineTo(0, y); while (x < w + step) { const top = base - amp * (.3 + rnd() * .7), wid = step * (.6 + rnd()), slope = 8 + rnd() * 14;
+      g.lineTo(x + slope, top); g.lineTo(x + slope + wid, top + (rnd() - .5) * 3); g.lineTo(x + slope * 2 + wid, base + (rnd() - .5) * 6);
+      x += slope * 2 + wid + rnd() * step * .8; g.lineTo(x, base + (rnd() - .5) * 4); } g.lineTo(w, h); g.closePath(); g.fill(); };
+  mesa(h * .86, '#3a1c35', 34, 70); mesa(h * .93, '#1c0f1f', 22, 55);
+  const fade = g.createLinearGradient(0, h * .82, 0, h); fade.addColorStop(0, 'rgba(20,12,23,0)'); fade.addColorStop(1, '#140c17');
+  g.fillStyle = fade; g.fillRect(0, h * .82, w, h * .18);
+}
+drawSky(); new ResizeObserver(drawSky).observe(document.body);
+
+// ---------- parameter model (mirrors the plugin) ----------
+const fHz = v => v < 1000 ? (v < 100 ? v.toFixed(1) : Math.round(v)) + ' Hz' : (v/1000).toFixed(v < 10000 ? 2 : 1) + ' kHz';
+const fDb = v => (v > 0.04 ? '+' : '') + v.toFixed(1) + ' dB';
+const fMs = v => v.toFixed(v < 10 ? 1 : 0) + ' ms';
+const fPct = v => Math.round(v*100) + '%';
+const fRat = v => v.toFixed(v < 10 ? 1 : 0) + ':1';
+const defs = {};
+function def(id, min, max, d, kind, fmt, centre) {
+  let skew = 1;
+  if (kind === 'skew') skew = Math.log(0.5) / Math.log((centre - min) / (max - min));
+  defs[id] = { id, min, max, d, kind, fmt, skew };
+}
+def('in', -24, 24, 0, 'lin', fDb); def('out', -18, 6, 0, 'lin', fDb);
+def('eqOn',0,1,1,'bool'); def('lcOn',0,1,0,'bool'); def('lcFreq',10,300,30,'log',fHz);
+[[80,.7],[250,1],[1000,1],[4000,1],[12000,.7]].forEach(([f,q],i)=>{ def('eqF'+i,20,20000,f,'log',fHz); def('eqG'+i,-12,12,0,'lin',fDb); def('eqQ'+i,.2,8,q,'skew',v=>v.toFixed(2),1); });
+def('exOn',0,1,0,'bool'); def('exMode',0,2,0,'int'); def('exMix',0,1,1,'lin',fPct); def('exX1',40,1500,150,'log',fHz); def('exX2',800,12000,3500,'log',fHz);
+[.2,.15,.25].forEach((v,b)=>def('exA'+b,0,1,v,'lin',fPct));
+def('dyOn',0,1,0,'bool'); def('dyX1',40,1500,120,'log',fHz); def('dyX2',800,12000,2500,'log',fHz);
+[[30,200],[15,150],[8,100]].forEach(([a,r],b)=>{ def('dyT'+b,-60,0,-18,'lin',fDb); def('dyR'+b,1,20,2,'skew',fRat,3); def('dyA'+b,.1,100,a,'skew',fMs,10); def('dyRl'+b,10,1000,r,'skew',fMs,150); def('dyM'+b,-12,12,0,'lin',fDb); });
+def('imOn',0,1,0,'bool'); def('imX1',40,1500,200,'log',fHz); def('imX2',800,12000,4000,'log',fHz);
+[0,1,2].forEach(b=>def('imW'+b,0,2,1,'lin',fPct));
+def('mxOn',0,1,1,'bool'); def('mxGain',0,24,0,'lin',fDb); def('mxCeil',-6,0,-1,'lin',fDb); def('mxRel',1,1000,100,'skew',fMs,100); def('mxTP',0,1,1,'bool');
+
+const toNorm = (d, v) => { const t = (v - d.min) / (d.max - d.min);
+  if (d.kind === 'log') return Math.log(v / d.min) / Math.log(d.max / d.min);
+  if (d.kind === 'skew') return Math.pow(Math.max(0, t), d.skew); return t; };
+const fromNorm = (d, t) => { t = Math.min(1, Math.max(0, t));
+  if (d.kind === 'log') return d.min * Math.pow(d.max / d.min, t);
+  if (d.kind === 'skew') return d.min + (d.max - d.min) * Math.pow(t, 1 / d.skew); return d.min + (d.max - d.min) * t; };
+
+const P = {}; for (const k in defs) P[k] = defs[k].d;
+let order = [0,1,2,3];
+let bypass = false;
+const listeners = [];
+function setP(id, v, silent) { const d = defs[id]; P[id] = Math.min(d.max, Math.max(d.min, v)); if (!silent) sync(); }
+function refreshAll() { listeners.forEach(f => f()); renderRack(); }
+
+const presets = [
+  ['Init', {}],
+  ['Gentle Polish', {eqOn:1,lcOn:1,lcFreq:25,eqG0:.8,eqG2:-.6,eqF2:400,eqG4:1.2,exOn:1,exMode:2,exMix:.5,exA0:.15,exA1:.1,exA2:.2,mxOn:1,mxGain:4,mxCeil:-1,mxRel:150}],
+  ['Streaming -14', {eqOn:1,lcOn:1,lcFreq:28,eqG4:1,dyOn:1,dyT0:-20,dyR0:1.8,dyT1:-22,dyR1:1.5,dyT2:-24,dyR2:1.5,mxOn:1,mxGain:5,mxCeil:-1,mxRel:120}],
+  ['Loud & Clean', {eqOn:1,lcOn:1,lcFreq:30,eqG0:1,eqG4:1.5,dyOn:1,dyT0:-22,dyR0:2.5,dyA0:25,dyT1:-20,dyR1:2,dyT2:-22,dyR2:2,exOn:1,exMode:0,exMix:.6,exA0:.2,exA1:.1,exA2:.3,mxOn:1,mxGain:10,mxCeil:-.8,mxRel:60}],
+  ['Warm Glue', {eqOn:1,eqG0:1.5,eqF0:100,eqG3:-.8,eqF3:3500,exOn:1,exMode:1,exMix:.8,exA0:.35,exA1:.3,exA2:.15,dyOn:1,dyT0:-18,dyR0:2,dyT1:-18,dyR1:2,dyT2:-18,dyR2:2,mxOn:1,mxGain:6,mxCeil:-1,mxRel:200}],
+  ['Wide Air', {eqOn:1,eqG4:2.5,eqF4:10000,eqG1:-1,eqF1:300,imOn:1,imW0:0,imW1:1.1,imW2:1.4,exOn:1,exMode:2,exMix:.7,exA0:0,exA1:.05,exA2:.4,mxOn:1,mxGain:5,mxCeil:-1}],
+  ['Club Banger', {eqOn:1,lcOn:1,lcFreq:22,eqG0:2.5,eqF0:60,eqG2:-1.5,eqF2:350,eqG4:1.5,imOn:1,imW0:0,imW2:1.25,dyOn:1,dyT0:-20,dyR0:3,dyA0:20,dyRl0:120,dyT1:-18,dyR1:2.5,dyT2:-20,dyR2:2,exOn:1,exMode:1,exMix:.7,exA0:.45,exA1:.2,exA2:.3,mxOn:1,mxGain:12,mxCeil:-.5,mxRel:40}],
+  ['Mono Bass Fix', {imOn:1,imX1:160,imW0:0,eqOn:1,lcOn:1,lcFreq:25,mxOn:1}],
+];
+const presetSel = $('#preset');
+presets.forEach(([n], i) => presetSel.add(new Option(n, i)));
+function applyPreset(i) {
+  for (const k in defs) P[k] = defs[k].d;
+  Object.entries(presets[i][1]).forEach(([k, v]) => P[k] = v);
+  order = [0,1,2,3]; presetSel.value = i; refreshAll(); sync();
+}
+presetSel.onchange = () => applyPreset(+presetSel.value);
+$('#prevP').onclick = () => applyPreset((+presetSel.value + presets.length - 1) % presets.length);
+$('#nextP').onclick = () => applyPreset((+presetSel.value + 1) % presets.length);
+
+// ---------- audio ----------
+let ctx = null, node = null, src = null, buffer = null, playing = false, preAn = null, postAn = null, splitL = null, splitR = null, startedAt = 0;
+let meter = { inL:0,inR:0,outL:0,outR:0,gr:0,b0:0,b1:0,b2:0,M:-70,S:-70,I:-70,tp:-180,corr:1 };
+const disp = { inL:0,inR:0,outL:0,outR:0,gr:0,b:[0,0,0],holdIn:-60,holdOut:-60 };
+const grHist = new Float32Array(360), outHist = new Float32Array(360), inHist = new Float32Array(360);
+let trackName = 'Demo loop · 120 BPM';
+
+function sync() { if (node) node.port.postMessage({ type:'params', p: { ...P }, order: [...order], bypass }); }
+
+async function ensureAudio() {
+  if (ctx) return true;
+  try {
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const code = $('#dsp-shared').textContent + '\n' + $('#dsp-worklet').textContent;
+    try { await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([code], { type: 'application/javascript' }))); }
+    catch (e1) { await ctx.audioWorklet.addModule('data:application/javascript;base64,' + btoa(unescape(encodeURIComponent(code)))); }
+    node = new AudioWorkletNode(ctx, 'machmaster', { numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [2], channelCount: 2, channelCountMode: 'explicit', channelInterpretation: 'speakers' });
+    node.port.onmessage = e => { const d = e.data; for (const k of ['inL','inR','outL','outR','gr','b0','b1','b2']) meter[k] = Math.max(meter[k], d[k]);
+      meter.fresh = true; meter.M = d.M; meter.S = d.S; meter.I = d.I; meter.tp = d.tp; meter.corr = d.corr; };
+    preAn = ctx.createAnalyser(); postAn = ctx.createAnalyser();
+    for (const a of [preAn, postAn]) { a.fftSize = 8192; a.smoothingTimeConstant = 0.78; a.minDecibels = -120; a.maxDecibels = 0; }
+    const sp = ctx.createChannelSplitter(2);
+    splitL = ctx.createAnalyser(); splitR = ctx.createAnalyser(); splitL.fftSize = splitR.fftSize = 2048;
+    node.connect(postAn); node.connect(sp); sp.connect(splitL, 0); sp.connect(splitR, 1);
+    node.connect(ctx.destination);
+    sync();
+    if (!buffer) buffer = makeDemo(ctx.sampleRate);
+    return true;
+  } catch (err) {
+    status('This browser could not start the audio engine (' + (err && err.message ? err.message : 'unknown error') + '). Try Chrome, Edge or Safari.');
+    ctx = null; return false;
+  }
+}
+function status(t) { $('#status').textContent = t || ''; }
+
+function startPlayback() {
+  stopPlayback();
+  src = ctx.createBufferSource(); src.buffer = buffer; src.loop = true;
+  src.connect(preAn); src.connect(node); src.start(); startedAt = ctx.currentTime; playing = true;
+  $('#play').textContent = '■ Stop';
+}
+function stopPlayback() { if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } playing = false; $('#play').textContent = buffer && trackName !== 'Demo loop · 120 BPM' ? '▶ Play track' : '▶ Play demo loop'; }
+
+$('#play').onclick = async () => {
+  if (!(await ensureAudio())) return;
+  if (ctx.state === 'suspended') await ctx.resume();
+  if (playing) stopPlayback(); else startPlayback();
+};
+$('#load').onclick = () => $('#file').click();
+$('#file').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  if (!(await ensureAudio())) return;
+  status('Decoding ' + f.name + '…');
+  try {
+    const ab = await f.arrayBuffer();
+    buffer = await ctx.decodeAudioData(ab);
+    trackName = f.name; $('#trackname').textContent = f.name; status('');
+    node.port.postMessage({ type: 'resetLoud' });
+    if (ctx.state === 'suspended') await ctx.resume();
+    startPlayback();
+  } catch (err) { status('Could not read that file. Try a WAV, MP3, AIFF or M4A.'); }
+  e.target.value = '';
+};
+$('#bypass').onclick = () => { bypass = !bypass; $('#bypass').setAttribute('aria-pressed', bypass); sync(); };
+$('#resetL').onclick = () => { if (node) node.port.postMessage({ type:'resetLoud' }); };
+
+// demo loop: 8 bars at 120 BPM, mixed with headroom so mastering has work to do
+function makeDemo(fs) {
+  const bpm = 120, beat = 60 / bpm, bars = 8, len = Math.floor(fs * beat * 4 * bars);
+  const b = new AudioBuffer({ length: len, numberOfChannels: 2, sampleRate: fs });
+  const L = b.getChannelData(0), R = b.getChannelData(1);
+  let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 * 2 - 1; };
+  const roots = [45, 45, 41, 43, 45, 45, 40, 43];
+  const chords = [[57,60,64],[57,60,64],[53,57,60],[55,59,62],[57,60,64],[57,60,64],[52,55,59],[55,59,62]];
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+  let lpB = 0, lpP = [0,0], hpH = 0, hpPrev = 0;
+  for (let i = 0; i < len; i++) {
+    const t = i / fs, bt = t / beat, bar = Math.floor(bt / 4) % bars, inBeat = (bt % 1) * beat, step16 = Math.floor(bt * 4), in16 = ((bt * 4) % 1) * beat / 4;
+    // kick on every beat
+    const kEnv = Math.exp(-inBeat * 9), kick = Math.sin(2 * Math.PI * (48 * inBeat + 90 * (1 - Math.exp(-inBeat * 30)) / 30)) * kEnv * 0.55;
+    // snare on 2 and 4
+    const isSn = Math.floor(bt) % 2 === 1, sn = isSn ? (rnd() * 0.28 + Math.sin(2 * Math.PI * 190 * inBeat) * 0.15) * Math.exp(-inBeat * 18) : 0;
+    // hats on 16ths
+    const n = rnd(); hpH = 0.6 * (hpH + n - hpPrev); hpPrev = n;
+    const hat = hpH * Math.exp(-in16 * (step16 % 2 ? 90 : 45)) * (step16 % 4 === 2 ? 0.16 : 0.09);
+    // bass: offbeat 8ths saw through one-pole LP
+    const in8 = ((bt * 2) % 1) * beat / 2, f = mtof(roots[bar] - 12), saw = 2 * ((t * f) % 1) - 1;
+    lpB += 0.06 * (saw - lpB); const bass = lpB * Math.exp(-in8 * 4) * 0.42 * (Math.floor(bt * 2) % 2 ? 1 : 0.55);
+    // pad: detuned saws, stereo
+    let pl = 0, pr = 0; for (const m of chords[bar]) { const fr = mtof(m); pl += 2 * ((t * fr * 1.003) % 1) - 1; pr += 2 * ((t * fr * 0.997) % 1) - 1; }
+    lpP[0] += 0.025 * (pl - lpP[0]); lpP[1] += 0.025 * (pr - lpP[1]);
+    const swell = 0.5 + 0.5 * Math.sin(2 * Math.PI * t / (beat * 8));
+    const pad = 0.05 * (0.6 + 0.4 * swell);
+    L[i] = kick + sn + hat * 0.7 + bass + lpP[0] * pad;
+    R[i] = kick + sn + hat * 1.0 + bass + lpP[1] * pad;
+  }
+  return b;
+}
+
+// ---------- knobs ----------
+const A0 = Math.PI * 0.75, A1 = Math.PI * 2.25;
+function arcPath(cx, cy, r, a, b) { const x0 = cx + r * Math.cos(a), y0 = cy + r * Math.sin(a), x1 = cx + r * Math.cos(b), y1 = cy + r * Math.sin(b);
+  return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r} ${r} 0 ${b - a > Math.PI ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`; }
+function knob(id, label, color, opts = {}) {
+  const d = defs[id], el = document.createElement('div'); el.className = 'knob' + (opts.big ? ' big' : '');
+  let ticks = ''; for (let k = 0; k <= 10; k++) { const a = A0 + k / 10 * (A1 - A0), r0 = 31, r1 = k % 5 ? 33.5 : 35;
+    ticks += `<line x1="${(32 + r0 * Math.cos(a)).toFixed(2)}" y1="${(32 + r0 * Math.sin(a)).toFixed(2)}" x2="${(32 + r1 * Math.cos(a)).toFixed(2)}" y2="${(32 + r1 * Math.sin(a)).toFixed(2)}"/>`; }
+  el.innerHTML = `<span class="kl">${label}</span><svg viewBox="0 0 64 64" role="slider" tabindex="0" aria-label="${label}" aria-valuemin="0" aria-valuemax="1">
+    <g stroke="${C.dim}" stroke-width="1.2" stroke-linecap="round" opacity=".7">${ticks}</g>
+    <path class="trk" fill="none" stroke="${C.edge}" stroke-width="4.5" stroke-linecap="round"/>
+    <path class="val" fill="none" stroke="${color}" color="${color}" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="20.5" fill="url(#kg)" stroke="#000" stroke-opacity=".6" stroke-width="1.5"/>
+    <circle cx="32" cy="32" r="16" fill="none" stroke="#fff" stroke-opacity=".05"/>
+    <line class="ptr" x1="32" y1="32" x2="32" y2="17" stroke="${C.text}" stroke-width="3" stroke-linecap="round"/></svg><span class="kv"></span>`;
+  const svg = el.querySelector('svg'), val = el.querySelector('.val'), ptr = el.querySelector('.ptr'), kv = el.querySelector('.kv');
+  el.querySelector('.trk').setAttribute('d', arcPath(32, 32, 27, A0, A1));
+  const bip = !!opts.bipolar;
+  function draw() { const t = toNorm(d, P[id]), a = A0 + t * (A1 - A0), from = bip ? (A0 + A1) / 2 : A0;
+    val.setAttribute('d', Math.abs(a - from) < 0.01 ? '' : arcPath(32, 32, 27, Math.min(from, a), Math.max(from, a)));
+    ptr.setAttribute('transform', `rotate(${(a + Math.PI / 2) * 180 / Math.PI} 32 32)`);
+    kv.textContent = d.fmt(P[id]); svg.setAttribute('aria-valuenow', t.toFixed(3)); svg.setAttribute('aria-valuetext', d.fmt(P[id])); }
+  let sy = 0, st = 0;
+  svg.addEventListener('pointerdown', e => { svg.setPointerCapture(e.pointerId); sy = e.clientY; st = toNorm(d, P[id]); e.preventDefault(); });
+  svg.addEventListener('pointermove', e => { if (!svg.hasPointerCapture(e.pointerId)) return; const sens = e.shiftKey ? 900 : 220;
+    setP(id, fromNorm(d, st + (sy - e.clientY) / sens)); draw(); if (opts.onChange) opts.onChange(); });
+  svg.addEventListener('dblclick', () => { setP(id, d.d); draw(); if (opts.onChange) opts.onChange(); });
+  svg.addEventListener('keydown', e => { const k = { ArrowUp: .01, ArrowRight: .01, ArrowDown: -.01, ArrowLeft: -.01 }[e.key]; if (!k) return; e.preventDefault();
+    setP(id, fromNorm(d, toNorm(d, P[id]) + k * (e.shiftKey ? 0.2 : 1))); draw(); if (opts.onChange) opts.onChange(); });
+  listeners.push(draw); draw(); return el;
+}
+// shared knob gradient
+document.body.insertAdjacentHTML('beforeend', `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="kg" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#4a3450"/><stop offset="1" stop-color="#150c18"/></radialGradient></defs></svg>`);
+
+function pill(id, label) { const b = document.createElement('button'); b.type = 'button'; b.className = 'pill'; b.textContent = label;
+  const draw = () => b.setAttribute('aria-pressed', P[id] > 0.5); b.onclick = () => { setP(id, P[id] > 0.5 ? 0 : 1); draw(); renderRack(); }; listeners.push(draw); draw(); return b; }
+
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+// ---------- graph (spectrum + EQ / crossovers) ----------
+const fx = (f, w) => w * Math.log(f / 20) / Math.log(1000);
+const xf = (x, w) => 20 * Math.pow(1000, Math.min(1, Math.max(0, x / w)));
+let preData = null, postData = null;
+function levelAt(arr, f0, f1) { if (!arr || !ctx) return -150; const bh = ctx.sampleRate / (arr.length * 2);
+  let b0 = Math.max(1, Math.floor(f0 / bh)), b1 = Math.min(arr.length - 1, Math.ceil(f1 / bh)); let m = -150;
+  if (b1 - b0 < 2) { const fb = 0.5 * (f0 + f1) / bh, i = Math.min(arr.length - 2, Math.max(1, Math.floor(fb))), t = fb - i; m = arr[i] + t * (arr[i + 1] - arr[i]); }
+  else for (let i = b0; i <= b1; i++) if (arr[i] > m) m = arr[i];
+  const hz = 0.5 * (f0 + f1); return m + 3 * Math.log2(hz / 1000); }
+
+function makeCanvas(wrap) { const c = document.createElement('canvas'); wrap.appendChild(c); const g = c.getContext('2d');
+  const fit = () => { const r = wrap.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1); c.width = Math.max(1, Math.round(r.width * dpr)); c.height = Math.max(1, Math.round(r.height * dpr)); };
+  new ResizeObserver(fit).observe(wrap); fit(); return { c, g }; }
+
+class Graph {
+  constructor(wrap, mode, opts = {}) { Object.assign(this, { wrap, mode, opts }); const { c, g } = makeCanvas(wrap); this.c = c; this.g = g; this.drag = -1; this.hover = -1;
+    c.addEventListener('pointerdown', e => this.down(e)); c.addEventListener('pointermove', e => this.move(e));
+    c.addEventListener('pointerup', e => { this.drag = -1; }); c.addEventListener('pointerleave', () => { if (this.drag < 0) this.hover = -1; });
+    c.addEventListener('dblclick', e => this.dbl(e)); c.addEventListener('wheel', e => this.wheel(e), { passive: false }); }
+  pos(e) { const r = this.c.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width, h: r.height }; }
+  gy(db, h) { return h * 0.5 - db / 15 * h * 0.5; }
+  yg(y, h) { return Math.max(-12, Math.min(12, (h * 0.5 - y) / (h * 0.5) * 15)); }
+  nodes(w, h) { const n = []; for (let i = 0; i < 5; i++) n.push({ x: fx(P['eqF' + i], w), y: this.gy(P['eqG' + i], h) }); n.push({ x: fx(P.lcFreq, w), y: this.gy(0, h) }); return n; }
+  hit(p) { if (this.mode === 'eq') { let best = -1, bd = 18; this.nodes(p.w, p.h).forEach((n, i) => { const d = Math.hypot(n.x - p.x, n.y - p.y); if (d < bd) { bd = d; best = i; } }); return best; }
+    if (this.mode === 'xo') { let best = -1, bd = 12; [this.opts.x1, this.opts.x2].forEach((id, k) => { const d = Math.abs(fx(P[id], p.w) - p.x); if (d < bd) { bd = d; best = k; } }); return best; } return -1; }
+  down(e) { const p = this.pos(e); this.drag = this.hit(p); if (this.drag >= 0) { this.c.setPointerCapture(e.pointerId); e.preventDefault(); } }
+  move(e) { const p = this.pos(e);
+    if (this.drag < 0) { this.hover = this.hit(p); this.c.style.cursor = this.hover >= 0 ? (this.mode === 'xo' ? 'ew-resize' : 'grab') : 'default'; return; }
+    if (this.mode === 'eq') { if (this.drag === 5) setP('lcFreq', xf(p.x, p.w)); else { setP('eqF' + this.drag, xf(p.x, p.w), true); setP('eqG' + this.drag, this.yg(p.y, p.h)); } }
+    else { const id = this.drag ? this.opts.x2 : this.opts.x1; let f = xf(p.x, p.w); f = this.drag ? Math.max(f, P[this.opts.x1] * 1.5) : Math.min(f, P[this.opts.x2] / 1.5); setP(id, f); }
+    refreshAll(); }
+  dbl(e) { if (this.mode !== 'eq') return; const n = this.hit(this.pos(e)); if (n === 5) setP('lcOn', P.lcOn > .5 ? 0 : 1); else if (n >= 0) setP('eqG' + n, 0); refreshAll(); }
+  wheel(e) { if (this.mode !== 'eq') return; const n = this.hit(this.pos(e)); if (n < 0 || n > 4) return; e.preventDefault();
+    setP('eqQ' + n, P['eqQ' + n] * Math.pow(1.25, -Math.sign(e.deltaY))); refreshAll(); }
+  draw() {
+    const dpr = this.c.width / Math.max(1, this.c.getBoundingClientRect().width), g = this.g, w = this.c.width / dpr, h = this.c.height / dpr;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+    g.fillStyle = C.panel; g.fillRect(0, 0, w, h);
+    g.font = '500 10px Barlow, sans-serif'; g.textBaseline = 'alphabetic';
+    for (const f of [30, 50, 100, 200, 500, 1000, 2000, 5000, 10000]) { const x = Math.round(fx(f, w)) + .5; g.strokeStyle = 'rgba(61,43,66,.7)'; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke();
+      g.fillStyle = C.faint; g.fillText(f >= 1000 ? f / 1000 + 'k' : f, x + 3, h - 6); }
+    if (this.mode === 'eq') for (let db = -12; db <= 12; db += 6) { const y = Math.round(this.gy(db, h)) + .5; g.strokeStyle = db ? 'rgba(61,43,66,.55)' : '#54405a'; g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke();
+      g.fillStyle = C.faint; g.textAlign = 'right'; g.fillText((db > 0 ? '+' : '') + db, w - 6, y - 3); g.textAlign = 'left'; }
+    if (this.mode === 'xo') { const f1 = P[this.opts.x1], f2 = Math.max(P[this.opts.x2], f1 * 1.5), xs = [0, fx(f1, w), fx(f2, w), w];
+      for (let b = 0; b < 3; b++) { const amt = Math.min(1, Math.max(0, this.opts.amount ? this.opts.amount(b) : 0)); const gr = g.createLinearGradient(0, h, 0, h * .2);
+        gr.addColorStop(0, hexA(C.band[b], .06 + .24 * amt)); gr.addColorStop(1, hexA(C.band[b], 0)); g.fillStyle = gr; g.fillRect(xs[b], 0, xs[b + 1] - xs[b], h);
+        if (this.opts.text) { const cx = (xs[b] + xs[b + 1]) / 2; g.textAlign = 'center'; g.fillStyle = C.band[b]; g.font = '800 14px "Alegreya SC", Georgia, serif';
+          g.fillText(['Low', 'Mid', 'High'][b], cx, 44); g.fillStyle = C.text; g.font = '600 15px Barlow, sans-serif'; g.fillText(this.opts.text(b), cx, 64); g.textAlign = 'left'; } } }
+    this.spec(preData, w, h, hexA(C.slate, .55), false); this.spec(postData, w, h, C.accent, true);
+    if (this.mode === 'xo') [this.opts.x1, this.opts.x2].forEach((id, k) => { const x = fx(P[id], w), hot = this.drag === k || this.hover === k;
+      g.fillStyle = hot ? C.text : 'rgba(139,145,161,.8)'; g.fillRect(x - (hot ? 1 : .5), 0, hot ? 2 : 1, h);
+      g.fillStyle = C.panel2; rr(g, x - 32, 26, 64, 18, 9); g.fill(); g.strokeStyle = hot ? C.text : C.dim; g.stroke();
+      g.fillStyle = hot ? C.text : C.dim; g.font = '600 10.5px Barlow, sans-serif'; g.textAlign = 'center'; g.fillText(fHz(P[id]), x, 39); g.textAlign = 'left'; });
+    if (this.mode === 'eq') this.eq(g, w, h);
+  }
+  spec(arr, w, h, color, fill) { if (!arr) return; const g = this.g; g.beginPath(); const steps = Math.floor(w / 3);
+    for (let i = 0; i <= steps; i++) { const x0 = i * w / steps, x1 = (i + 1) * w / steps, db = levelAt(arr, xf(x0, w), xf(x1, w));
+      const y = h - (Math.max(-96, Math.min(6, db)) + 96) / 102 * h * 0.92; i ? g.lineTo(x0, y) : g.moveTo(x0, y); }
+    if (fill) { g.save(); g.lineTo(w, h); g.lineTo(0, h); g.closePath(); const gr = g.createLinearGradient(0, h * .2, 0, h); gr.addColorStop(0, hexA(color, .28)); gr.addColorStop(1, hexA(color, .02)); g.fillStyle = gr; g.fill(); g.restore();
+      g.beginPath(); for (let i = 0; i <= steps; i++) { const x0 = i * w / steps, x1 = (i + 1) * w / steps, db = levelAt(arr, xf(x0, w), xf(x1, w)); const y = h - (Math.max(-96, Math.min(6, db)) + 96) / 102 * h * 0.92; i ? g.lineTo(x0, y) : g.moveTo(x0, y); } }
+    g.strokeStyle = color; g.lineWidth = fill ? 1.4 : 1; g.stroke(); g.lineWidth = 1; }
+  eq(g, w, h) { const fs = ctx ? ctx.sampleRate : 48000, bq = eqDesign(fs, P), lc = lcDesign(fs, P.lcFreq), on = P.eqOn > .5;
+    for (let b = 0; b < 5; b++) { g.beginPath(); for (let x = 0; x <= w; x += 3) { const y = this.gy(20 * Math.log10(Math.max(1e-6, bqMag(bq[b], fs, xf(x, w)))), h); x ? g.lineTo(x, y) : g.moveTo(x, y); } g.strokeStyle = hexA(C.node[b + 1], .28); g.stroke(); }
+    g.beginPath(); for (let x = 0; x <= w; x += 2) { const f = xf(x, w); let m = 1; for (const b of bq) m *= bqMag(b, fs, f); if (P.lcOn > .5) m *= bqMag(lc[0], fs, f) * bqMag(lc[1], fs, f);
+      const y = Math.max(-20, Math.min(h + 20, this.gy(20 * Math.log10(Math.max(1e-6, m)), h))); x ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.strokeStyle = hexA(on ? C.amber : C.dim, .25); g.lineWidth = 6; g.stroke(); g.strokeStyle = on ? C.amber : C.dim; g.lineWidth = 2; g.stroke(); g.lineWidth = 1;
+    this.nodes(w, h).forEach((n, i) => { const act = i !== 5 || P.lcOn > .5, r = (i === this.hover || i === this.drag) ? 10 : 8;
+      g.beginPath(); g.arc(n.x, n.y, r, 0, Math.PI * 2); g.fillStyle = C.bg; g.fill(); g.lineWidth = 2; g.strokeStyle = hexA(C.node[i === 5 ? 0 : i + 1], act ? 1 : .35); g.stroke(); g.lineWidth = 1;
+      g.fillStyle = hexA(C.node[i === 5 ? 0 : i + 1], act ? 1 : .5); g.font = '700 9.5px Barlow, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(i === 5 ? 'LC' : i + 1, n.x, n.y + .5); g.textBaseline = 'alphabetic';
+      if (i === this.hover || i === this.drag) { const t = i === 5 ? 'Low cut ' + fHz(P.lcFreq) + (P.lcOn > .5 ? '' : ' (off, double-click)') : fHz(P['eqF' + i]) + '   ' + fDb(P['eqG' + i]) + '   Q ' + P['eqQ' + i].toFixed(2);
+        g.fillStyle = C.text; g.font = '600 11px Barlow, sans-serif'; g.fillText(t, Math.max(110, Math.min(w - 110, n.x)), n.y - 18); } g.textAlign = 'left'; }); }
+}
+function hexA(hex, a) { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
+function rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+
+// ---------- views ----------
+const NAMES = ['Equalizer', 'Exciter', 'Dynamics', 'Imager', 'Maximizer'], ONS = ['eqOn', 'exOn', 'dyOn', 'imOn', 'mxOn'];
+const views = [], graphs = [];
+let current = 0;
+function graphPanel(title, mode, onId, opts) { const p = el('div', 'panel graphwrap'); const g = new Graph(p, mode, opts); graphs.push(g);
+  p.appendChild(el('div', 'graph-title', title)); const m = el('div', 'offmask', 'Module off · switch it on with the power button on its card'); p.appendChild(m);
+  const upd = () => m.hidden = P[onId] > .5; listeners.push(upd); upd(); return { p, g }; }
+
+// EQ
+{ const v = el('section', 'view'); const { p, g } = graphPanel('Equalizer · drag nodes, scroll for Q, double-click to reset', 'eq', 'eqOn'); v.appendChild(p);
+  const s = el('div', 'panel strip'), gs = el('div', 'groups'); gs.style.gridTemplateColumns = 'minmax(0,.62fr) repeat(5, minmax(0,1fr))';
+  const lc = el('div', 'group'); lc.appendChild(el('h3', '', 'Low cut')).style.color = C.node[0]; const lr = el('div', 'krow'); lr.style.alignItems = 'center'; lr.append(pill('lcOn', 'ON'), knob('lcFreq', 'Freq', C.node[0])); lc.appendChild(lr); gs.appendChild(lc);
+  ['1 Low shelf', '2 Low mid', '3 Mid', '4 High mid', '5 High shelf'].forEach((n, b) => { const gr = el('div', 'group'); gr.appendChild(el('h3', '', n)).style.color = C.node[b + 1];
+    const kr = el('div', 'krow'); kr.append(knob('eqF' + b, 'Freq', C.node[b + 1]), knob('eqG' + b, 'Gain', C.node[b + 1], { bipolar: true }), knob('eqQ' + b, 'Q', C.node[b + 1])); gr.appendChild(kr); gs.appendChild(gr); });
+  s.appendChild(gs); v.appendChild(s); views.push({ v, tick: () => g.draw() }); }
+// Exciter
+{ const v = el('section', 'view'); const { p, g } = graphPanel('Exciter · drag the lines to set the bands', 'xo', 'exOn', { x1: 'exX1', x2: 'exX2', text: b => fPct(P['exA' + b]), amount: b => P['exA' + b] }); v.appendChild(p);
+  const s = el('div', 'panel strip'), gs = el('div', 'groups'); gs.style.gridTemplateColumns = 'repeat(4, minmax(0,1fr))';
+  ['Low', 'Mid', 'High'].forEach((n, b) => { const gr = el('div', 'group'); gr.appendChild(el('h3', '', n + ' drive')).style.color = C.band[b]; const kr = el('div', 'krow'); kr.appendChild(knob('exA' + b, 'Drive', C.band[b], { big: true })); gr.appendChild(kr); gs.appendChild(gr); });
+  const ch = el('div', 'group'); ch.appendChild(el('h3', '', 'Character')).style.color = C.dim; const seg = el('div', 'seg'); seg.style.justifySelf = 'center';
+  ['Warm', 'Tube', 'Tape'].forEach((n, m) => { const b = el('button', '', n); b.type = 'button'; b.onclick = () => { setP('exMode', m); refreshAll(); }; seg.appendChild(b); });
+  const segDraw = () => [...seg.children].forEach((b, m) => b.setAttribute('aria-pressed', (P.exMode | 0) === m)); listeners.push(segDraw); segDraw();
+  ch.appendChild(seg); const kr = el('div', 'krow'); kr.appendChild(knob('exMix', 'Mix', C.amber)); ch.appendChild(kr); gs.appendChild(ch);
+  s.appendChild(gs); v.appendChild(s); views.push({ v, tick: () => g.draw() }); }
+// Dynamics
+const grBars = [];
+{ const v = el('section', 'view'); const { p, g } = graphPanel('Multiband dynamics · drag the lines to set the bands', 'xo', 'dyOn', { x1: 'dyX1', x2: 'dyX2', text: b => fRat(P['dyR' + b]) + ' @ ' + P['dyT' + b].toFixed(1), amount: b => disp.b[b] / 6 }); v.appendChild(p);
+  const s = el('div', 'panel strip'), gs = el('div', 'groups'); gs.style.gridTemplateColumns = 'repeat(3, minmax(0,1fr))';
+  ['Low band', 'Mid band', 'High band'].forEach((n, b) => { const gr = el('div', 'group'); gr.appendChild(el('h3', '', n)).style.color = C.band[b];
+    const bar = el('div', 'grbar', '<i></i><span>GR 0.0 dB</span>'); grBars.push(bar); gr.appendChild(bar);
+    const kr = el('div', 'krow'); kr.append(knob('dyT' + b, 'Thresh', C.band[b]), knob('dyR' + b, 'Ratio', C.band[b]), knob('dyA' + b, 'Attack', C.band[b]), knob('dyRl' + b, 'Release', C.band[b]), knob('dyM' + b, 'Makeup', C.band[b], { bipolar: true }));
+    gr.appendChild(kr); gs.appendChild(gr); });
+  s.appendChild(gs); v.appendChild(s);
+  views.push({ v, tick: () => { g.draw(); grBars.forEach((bar, b) => { bar.firstChild.style.width = Math.min(100, disp.b[b] / 12 * 100) + '%'; bar.lastChild.textContent = 'GR −' + disp.b[b].toFixed(1) + ' dB'; }); } }); }
+// Imager
+let scope;
+{ const v = el('section', 'view'); const top = el('div', 'split2');
+  const { p, g } = graphPanel('Imager · drag the lines to set the bands', 'xo', 'imOn', { x1: 'imX1', x2: 'imX2', text: b => fPct(P['imW' + b]), amount: b => Math.abs(P['imW' + b] - 1) }); top.appendChild(p);
+  const sw = el('div', 'panel scopewrap'); scope = makeCanvas(sw); top.appendChild(sw); v.appendChild(top);
+  const s = el('div', 'panel strip'), gs = el('div', 'groups'); gs.style.gridTemplateColumns = 'repeat(3, minmax(0,1fr))';
+  ['Low', 'Mid', 'High'].forEach((n, b) => { const gr = el('div', 'group'); gr.appendChild(el('h3', '', n + ' width')).style.color = C.band[b]; const kr = el('div', 'krow'); kr.appendChild(knob('imW' + b, 'Width', C.band[b], { big: true, bipolar: true })); gr.appendChild(kr); gs.appendChild(gr); });
+  s.appendChild(gs); s.appendChild(el('div', 'hint', '0% = mono · 100% = unchanged · 200% = extra wide')); v.appendChild(s);
+  views.push({ v, tick: () => { g.draw(); drawScope(); } }); }
+// Maximizer
+let hist;
+{ const v = el('section', 'view'); const grid = el('div', 'maxgrid'); const ctl = el('div', 'panel maxctl');
+  ctl.appendChild(el('div', 'graph-title', 'Maximizer')).style.position = 'static';
+  ctl.appendChild(knob('mxGain', 'Push', C.accent, { big: true }));
+  const r = el('div', 'krow'); r.append(knob('mxCeil', 'Ceiling', C.amber), knob('mxRel', 'Release', C.amber)); ctl.appendChild(r);
+  ctl.appendChild(pill('mxTP', 'TRUE PEAK')); ctl.appendChild(el('div', 'hint', 'Look-ahead brickwall limiter. Push drives the mix into the ceiling.'));
+  grid.appendChild(ctl); const hw = el('div', 'panel histwrap'); hist = makeCanvas(hw); grid.appendChild(hw); v.appendChild(grid);
+  const m = el('div', 'offmask', 'Maximizer off'); m.style.position = 'relative'; m.style.minHeight = '40px'; m.style.background = 'none';
+  const upd = () => m.hidden = P.mxOn > .5; listeners.push(upd); upd(); v.appendChild(m);
+  views.push({ v, tick: drawHist }); }
+views.forEach(x => $('#views').appendChild(x.v));
+function select(i) { current = i; views.forEach((x, k) => x.v.hidden = k !== i); renderRack(); }
+
+// ---------- rack ----------
+function renderRack() {
+  const rack = $('#rack'); rack.innerHTML = '';
+  for (let i = 0; i < 5; i++) { const m = i < 4 ? order[i] : 4, on = P[ONS[m]] > .5;
+    const c = el('div', 'card' + (on ? '' : ' off')); c.setAttribute('role', 'tab'); c.setAttribute('aria-selected', m === current); c.tabIndex = 0;
+    const pw = el('button', 'power'); pw.type = 'button'; pw.setAttribute('aria-label', (on ? 'Turn off ' : 'Turn on ') + NAMES[m]);
+    pw.onclick = e => { e.stopPropagation(); setP(ONS[m], on ? 0 : 1); refreshAll(); };
+    c.append(pw, el('span', 'name', NAMES[m].toUpperCase()), el('span', 'slot', i < 4 ? String(i + 1) : 'OUT'));
+    if (i < 4) { const ar = el('div', 'arrows'); const l = el('button', '', '‹'), r = el('button', '', '›'); l.type = r.type = 'button';
+      l.setAttribute('aria-label', 'Move ' + NAMES[m] + ' earlier'); r.setAttribute('aria-label', 'Move ' + NAMES[m] + ' later');
+      l.disabled = i === 0; r.disabled = i === 3;
+      l.onclick = e => { e.stopPropagation(); [order[i - 1], order[i]] = [order[i], order[i - 1]]; sync(); renderRack(); };
+      r.onclick = e => { e.stopPropagation(); [order[i + 1], order[i]] = [order[i], order[i + 1]]; sync(); renderRack(); };
+      ar.append(l, r); c.appendChild(ar); }
+    c.onclick = () => select(m); c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(m); } };
+    rack.appendChild(c); }
+}
+
+// ---------- meters ----------
+const io = $('#iorow'); io.append(knob('in', 'Input', '#9aa9c8', { bipolar: true }), knob('out', 'Output', C.amber, { bipolar: true }));
+const mcv = makeCanvas($('#meterWrap'));
+
+function drawMeters() {
+  const g = mcv.g, dpr = mcv.c.width / Math.max(1, mcv.c.getBoundingClientRect().width), w = mcv.c.width / dpr, h = mcv.c.height / dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+  const top = 18, bot = h - 18, bh = bot - top, bw = 12, gap = 5, toY = db => bot - (Math.max(-60, Math.min(0, db)) + 60) / 60 * bh;
+  const x0 = Math.max(4, w / 2 - 92); const bar = (x, lin, col) => { g.fillStyle = C.panel2; rr(g, x, top, bw, bh, 3); g.fill(); const db = lin > 0 ? 20 * Math.log10(lin) : -60, y = toY(db);
+    const gr = g.createLinearGradient(0, bot, 0, top); gr.addColorStop(0, col); gr.addColorStop(1, db > -1 ? C.hot : col); g.fillStyle = gr; if (bot - y > 1) { rr(g, x, y, bw, bot - y, 3); g.fill(); } };
+  bar(x0, disp.inL, '#7d8db0'); bar(x0 + bw + gap, disp.inR, '#7d8db0');
+  const sx = x0 + 2 * bw + gap + 4; g.font = '500 9px Barlow, sans-serif'; g.textAlign = 'center'; g.fillStyle = C.faint;
+  for (const db of [0, -6, -12, -18, -24, -36, -48, -60]) g.fillText(db, sx + 12, toY(db) + 3);
+  const ox = sx + 28; bar(ox, disp.outL, C.accent); bar(ox + bw + gap, disp.outR, C.accent);
+  const gx = ox + 2 * bw + gap + 16; g.fillStyle = C.panel2; rr(g, gx, top, bw, bh, 3); g.fill(); const gh = Math.min(1, disp.gr / 24) * bh; if (gh > 1) { g.fillStyle = C.amber; rr(g, gx, top, bw, gh, 3); g.fill(); }
+  g.fillStyle = C.dim; g.font = '700 9.5px "Barlow Condensed", sans-serif';
+  g.fillText('IN', x0 + bw + gap / 2, h - 4); g.fillText('OUT', ox + bw + gap / 2, h - 4); g.fillText('GR', gx + bw / 2, h - 4);
+  g.fillStyle = C.text; g.font = '600 10px Barlow, sans-serif';
+  g.fillText(disp.holdIn > -59 ? disp.holdIn.toFixed(1) : '-inf', x0 + bw + gap / 2, 11); g.fillText(disp.holdOut > -59 ? disp.holdOut.toFixed(1) : '-inf', ox + bw + gap / 2, 11); g.fillText((-disp.gr).toFixed(1), gx + bw / 2, 11);
+  g.textAlign = 'left';
+  const f = v => v > -69.9 ? v.toFixed(1) : '--';
+  $('#lI').textContent = f(meter.I); $('#lS').textContent = f(meter.S); $('#lM').textContent = f(meter.M);
+  const lp = $('#lP'); lp.textContent = meter.tp > -100 ? meter.tp.toFixed(1) + ' dB' : '--'; lp.classList.toggle('over', meter.tp > -0.05);
+}
+function drawScope() {
+  const g = scope.g, dpr = scope.c.width / Math.max(1, scope.c.getBoundingClientRect().width), w = scope.c.width / dpr, h = scope.c.height / dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.fillStyle = C.panel; g.fillRect(0, 0, w, h);
+  const side = Math.min(w - 28, h - 70), cx = w / 2, cy = 14 + side / 2, r = side / 2;
+  g.strokeStyle = C.edge; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.moveTo(cx, cy - r); g.lineTo(cx, cy + r); g.moveTo(cx - r, cy); g.lineTo(cx + r, cy); g.stroke();
+  g.fillStyle = C.faint; g.font = '700 10px "Barlow Condensed", sans-serif'; g.fillText('L', cx - r * .75 - 4, cy - r * .75); g.fillText('R', cx + r * .75 - 2, cy - r * .75); g.fillText('M', cx + 4, cy - r + 12);
+  if (splitL) { const a = new Float32Array(splitL.fftSize), b = new Float32Array(splitR.fftSize); splitL.getFloatTimeDomainData(a); splitR.getFloatTimeDomainData(b);
+    let pk = .05; for (let i = 0; i < a.length; i++) pk = Math.max(pk, Math.abs(a[i]), Math.abs(b[i])); const sc = r * .9 / Math.max(.25, pk * 1.2);
+    g.fillStyle = hexA(C.accent, .55); for (let i = 0; i < a.length; i++) { const x = cx + (b[i] - a[i]) * .7071 * sc, y = cy - (a[i] + b[i]) * .7071 * sc; if (Math.hypot(x - cx, y - cy) < r + 2) g.fillRect(x, y, 1.6, 1.6); } }
+  const by = h - 34, bx = 16, bw = w - 32, mid = bx + bw / 2, x = mid + meter.corr * bw / 2;
+  g.fillStyle = C.panel2; rr(g, bx, by, bw, 18, 4); g.fill(); g.fillStyle = meter.corr < 0 ? C.hot : C.band[2]; if (Math.abs(x - mid) > 1) { rr(g, Math.min(mid, x), by, Math.abs(x - mid), 18, 3); g.fill(); }
+  g.fillStyle = C.text; g.font = '600 10px Barlow, sans-serif'; g.textAlign = 'center'; g.fillText('CORRELATION ' + meter.corr.toFixed(2), mid, by + 13); g.textAlign = 'left'; g.fillText('−1', bx + 4, by + 13); g.textAlign = 'right'; g.fillText('+1', bx + bw - 4, by + 13); g.textAlign = 'left';
+}
+function drawHist() {
+  const g = hist.g, dpr = hist.c.width / Math.max(1, hist.c.getBoundingClientRect().width), w = hist.c.width / dpr, h = hist.c.height / dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.fillStyle = C.panel; g.fillRect(0, 0, w, h);
+  g.fillStyle = C.dim; g.font = '700 14px "Alegreya SC", Georgia, serif'; g.fillText('Gain reduction history', 14, 22);
+  const L = 14, T = 34, W = w - 50, H = h - 64;
+  for (let db = 0; db <= 12; db += 3) { const y = T + H * db / 12; g.strokeStyle = 'rgba(61,43,66,.7)'; g.beginPath(); g.moveTo(L, y + .5); g.lineTo(L + W, y + .5); g.stroke(); g.fillStyle = C.faint; g.font = '500 9.5px Barlow, sans-serif'; g.fillText('−' + db, L + W + 6, y + 4); }
+  const n = grHist.length, lvl = v => { const d = v > 0 ? 20 * Math.log10(v) : -60; return T + H - (Math.max(-36, Math.min(0, d)) + 36) / 36 * H; };
+  g.beginPath(); for (let i = 0; i < n; i++) { const x = L + W * i / (n - 1); i ? g.lineTo(x, lvl(inHist[i])) : g.moveTo(x, lvl(inHist[i])); } g.lineTo(L + W, T + H); g.lineTo(L, T + H); g.closePath(); g.fillStyle = hexA(C.slate, .35); g.fill();
+  g.beginPath(); for (let i = 0; i < n; i++) { const x = L + W * i / (n - 1); i ? g.lineTo(x, lvl(outHist[i])) : g.moveTo(x, lvl(outHist[i])); } g.strokeStyle = hexA(C.text, .8); g.lineWidth = 1.2; g.stroke(); g.lineWidth = 1;
+  g.beginPath(); g.moveTo(L, T); for (let i = 0; i < n; i++) g.lineTo(L + W * i / (n - 1), T + H * Math.min(1, grHist[i] / 12)); g.lineTo(L + W, T); g.closePath(); g.fillStyle = hexA(C.accent, .55); g.fill(); g.strokeStyle = C.accent; g.stroke();
+  g.fillStyle = C.faint; g.font = '500 10px Barlow, sans-serif'; g.textAlign = 'center'; g.fillText('orange = gain reduction · white = output level · slate = into limiter', w / 2, h - 10); g.textAlign = 'left';
+}
+
+// ---------- main loop ----------
+let lastHist = 0;
+function frame(t) {
+  if (preAn) { if (!preData) { preData = new Float32Array(preAn.frequencyBinCount); postData = new Float32Array(postAn.frequencyBinCount); }
+    preAn.getFloatFrequencyData(preData); postAn.getFloatFrequencyData(postData); }
+  disp.inL = Math.max(meter.inL, disp.inL * .86); disp.inR = Math.max(meter.inR, disp.inR * .86);
+  disp.outL = Math.max(meter.outL, disp.outL * .86); disp.outR = Math.max(meter.outR, disp.outR * .86);
+  disp.gr = Math.max(meter.gr, disp.gr * .85);
+  for (let b = 0; b < 3; b++) { const v = meter['b' + b]; disp.b[b] = v > disp.b[b] ? v : disp.b[b] * .85 + v * .15; }
+  const db = v => v > 0 ? 20 * Math.log10(v) : -60;
+  disp.holdIn = Math.max(db(Math.max(meter.inL, meter.inR)), disp.holdIn - .6); disp.holdOut = Math.max(db(Math.max(meter.outL, meter.outR)), disp.holdOut - .6);
+  if (t - lastHist > 33) { lastHist = t; grHist.copyWithin(0, 1); outHist.copyWithin(0, 1); inHist.copyWithin(0, 1);
+    if (meter.fresh) { const o = Math.max(meter.outL, meter.outR); grHist[359] = meter.gr; outHist[359] = o; inHist[359] = o * Math.pow(10, meter.gr / 20);
+      for (const k of ['inL', 'inR', 'outL', 'outR', 'gr', 'b0', 'b1', 'b2']) meter[k] = 0; meter.fresh = false; }
+    else if (!playing) { grHist[359] = 0; outHist[359] = 0; inHist[359] = 0; } }
+  views[current].tick(); drawMeters();
+  requestAnimationFrame(frame);
+}
+applyPreset(3); select(0);
+requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* Checkout link. Paste the Gumroad product URL here. */
+const BUY_URL = "";
+document.querySelectorAll('[data-buy]').forEach(a => { if (BUY_URL) { a.href = BUY_URL; a.target = '_blank'; a.rel = 'noopener'; } });
+</script>
+</body>
+</html>

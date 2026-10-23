@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sounding Sonics: Instruments for Mac</title>
-<meta name="description" content="Sounding Sonics makes synths and instruments for Mac that light up when you play. Try every plugin free in your browser before you buy.">
+<title>Sounding Sonics: Plugins for Mac</title>
+<meta name="description" content="Sounding Sonics makes synths and mastering tools for Mac that light up when you play. Try every plugin free in your browser before you buy.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sounding Sonics">
 <meta property="og:description" content="Instruments that light up when you play. Synths for Mac you can try in your browser.">
@@ -118,8 +118,8 @@ footer a:hover{color:var(--text)}
  <div class="wrap">
   <p class="eyebrow">SOUNDING SONICS</p>
   <h1>Instruments that light up when you play.</h1>
-  <p class="lede">Synths for Mac with screens you'll want to look at. Every one can be played free in your browser before you buy.</p>
-  <div class="ctas"><a class="btn primary" href="#plugins">See the plugins</a><a class="btn ghost" href="/supersonic/">Play Supersonic</a></div>
+  <p class="lede">Synths and mastering tools for Mac with screens you'll want to look at. Every one can be tried free in your browser before you buy.</p>
+  <div class="ctas"><a class="btn primary" href="#plugins">See the plugins</a><a class="btn ghost" href="/machmaster/">Try Machmaster</a><a class="btn ghost" href="/supersonic/">Play Supersonic</a></div>
  </div>
 </header>
 
@@ -146,7 +146,7 @@ footer a:hover{color:var(--text)}
 
 <footer><div class="wrap">
  <span>© 2026 Sounding Sonics</span>
- <span><a href="#plugins">Plugins</a> · <a href="/supersonic/">Supersonic</a></span>
+ <span><a href="#plugins">Plugins</a> · <a href="/machmaster/">Machmaster</a> · <a href="/supersonic/">Supersonic</a></span>
 </div></footer>
 
 <script>
@@ -156,6 +156,16 @@ footer a:hover{color:var(--text)}
    --------------------------------------------------------------- */
 const PLUGINS = [
   {
+    name: "Machmaster",
+    status: "available",
+    tagline: "Mastering suite: EQ, exciter, multiband dynamics, imager and a true-peak maximizer with loudness meters.",
+    price: "$59",
+    page: "/machmaster/",
+    buy: "/machmaster/#buy",
+    image: "/machmaster/thumb.png",
+    tags: ["New", "Mastering", "AU · VST3 · Standalone"]
+  },
+  {
     name: "Supersonic",
     status: "available",
     tagline: "FM and phase-distortion synth that draws every note you play as a star.",
@@ -163,7 +173,7 @@ const PLUGINS = [
     page: "/supersonic/",
     buy: "https://9485186020752.gumroad.com/l/gxofm",
     image: "/supersonic/thumb.png",
-    tags: ["New", "Synth", "AU · VST3 · Standalone"]
+    tags: ["Synth", "AU · VST3 · Standalone"]
   },
   {
     name: "Next instrument",
@@ -174,7 +184,7 @@ const PLUGINS = [
 
 const grid=document.getElementById('grid');
 const live=PLUGINS.filter(p=>p.status==='available').length;
-document.getElementById('count').textContent=live+(live===1?' instrument':' instruments')+' available';
+document.getElementById('count').textContent=live+(live===1?' plugin':' plugins')+' available';
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 PLUGINS.forEach(p=>{
   const el=document.createElement('article');
