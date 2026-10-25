@@ -100,10 +100,17 @@ a{color:inherit}
 
 /* promo video */
 .promo{display:grid;gap:28px;align-items:center}
-@media (min-width:820px){.promo{grid-template-columns:1fr auto;gap:56px}}
 .promo p.sub{font-size:16.5px}
 .promo .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.promo video{display:block;width:min(100%,360px);aspect-ratio:9/16;margin-inline:auto;border-radius:18px;background:#05080F;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.promo video{display:block;margin-inline:auto;border-radius:18px;background:#05080F;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.promo video.tall{width:min(100%,360px);aspect-ratio:9/16}
+.promo video.wide{display:none;width:100%;aspect-ratio:16/9}
+@media (min-width:820px){
+  .promo .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px 40px}
+  .promo .head .ctas{margin-top:0}
+  .promo video.tall{display:none}
+  .promo video.wide{display:block}
+}
 
 footer{border-top:1px solid #222326}
 footer .wrap{padding-block:24px 30px;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;color:var(--faint);font-size:13px}
@@ -132,12 +139,15 @@ footer a:hover{color:var(--text)}
 </header>
 
 <section class="sec" id="watch"><div class="wrap promo">
- <div>
-  <h2>Make it. Master it.</h2>
-  <p class="sub">Supersonic for the sound, Machmaster for the finish. Pay once and it's yours, no subscription. Try both free in your browser.</p>
+ <div class="head">
+  <div>
+   <h2>Make it. Master it.</h2>
+   <p class="sub">Supersonic for the sound, Machmaster for the finish. Pay once and it's yours, no subscription. Try both free in your browser.</p>
+  </div>
   <div class="ctas"><a class="btn primary" href="#plugins">See the plugins</a></div>
  </div>
- <video src="/media/promo.mp4" poster="/media/promo-poster.jpg" controls playsinline preload="metadata" aria-label="Sounding Sonics promo video"></video>
+ <video class="wide" src="/media/promo-wide.mp4" poster="/media/promo-wide-poster.jpg" controls playsinline preload="metadata" aria-label="Sounding Sonics promo video"></video>
+ <video class="tall" src="/media/promo.mp4" poster="/media/promo-poster.jpg" controls playsinline preload="metadata" aria-label="Sounding Sonics promo video"></video>
 </div></section>
 
 <section class="sec" id="plugins" style="padding-top:24px"><div class="wrap">
