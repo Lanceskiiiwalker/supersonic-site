@@ -98,6 +98,13 @@ a{color:inherit}
 .point b{display:block;font-weight:500;font-size:16px}
 .point span{color:var(--sub);font-size:14px}
 
+/* promo video */
+.promo{display:grid;gap:28px;align-items:center}
+@media (min-width:820px){.promo{grid-template-columns:1fr auto;gap:56px}}
+.promo p.sub{font-size:16.5px}
+.promo .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.promo video{display:block;width:min(100%,360px);aspect-ratio:9/16;margin-inline:auto;border-radius:18px;background:#05080F;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+
 footer{border-top:1px solid #222326}
 footer .wrap{padding-block:24px 30px;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;color:var(--faint);font-size:13px}
 footer a{text-decoration:none}
@@ -109,6 +116,7 @@ footer a:hover{color:var(--text)}
 
 <div class="nav"><div class="wrap">
  <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0A1020"/><path d="M8 50a40 40 0 0 1 48 0" fill="none" stroke="#E3B04B" stroke-width="3"/><g stroke="#FFE8AA" stroke-width="2.4" stroke-linecap="round"><path d="M32 14v24M20 26h24M24 18l16 16M40 18L24 34"/></g><circle cx="32" cy="26" r="7" fill="#E3B04B"/><circle cx="32" cy="26" r="3.5" fill="#FFF6DA"/></svg>Sounding Sonics</a>
+ <a class="l" href="#watch">Watch</a>
  <a class="l" href="#plugins">Plugins</a>
  <a class="l" href="#about">About</a>
 </div></div>
@@ -123,7 +131,16 @@ footer a:hover{color:var(--text)}
  </div>
 </header>
 
-<section class="sec" id="plugins"><div class="wrap">
+<section class="sec" id="watch"><div class="wrap promo">
+ <div>
+  <h2>Make it. Master it.</h2>
+  <p class="sub">Supersonic for the sound, Machmaster for the finish. Pay once and it's yours, no subscription. Try both free in your browser.</p>
+  <div class="ctas"><a class="btn primary" href="#plugins">See the plugins</a></div>
+ </div>
+ <video src="/media/promo.mp4" poster="/media/promo-poster.jpg" controls playsinline preload="metadata" aria-label="Sounding Sonics promo video"></video>
+</div></section>
+
+<section class="sec" id="plugins" style="padding-top:24px"><div class="wrap">
  <div class="sec-head">
   <div><h2>Plugins</h2><p class="sub">AU, VST3 and Standalone for macOS. Each page has a playable demo.</p></div>
   <span class="count" id="count"></span>
