@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Press Kit · Sounding Sonics</title>
+<meta name="description" content="Press kit for Sounding Sonics: product facts, logos, cover art, promo videos and contact for Supersonic and Machmaster.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sounding Sonics Press Kit">
+<meta property="og:description" content="Logos, cover art, promo videos and product facts for Supersonic and Machmaster.">
+<meta property="og:image" content="https://www.soundingsonics.com/og-image.png">
+<meta property="og:url" content="https://www.soundingsonics.com/press/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --app:#141516; --tile:#222326; --tile-hi:#2C2E32; --tline:#34363B; --text:#F3F3F4; --sub:#A4A7AD; --faint:#6E7177;
+  --brass:#E3B04B; --sea:#3ED3C1; --lilac:#A68BFF; --coral:#FF6F5E;
+  --f:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--app);color:var(--text);font-family:var(--f);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.nav{position:sticky;top:0;z-index:20;background:rgba(20,21,22,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #222326}
+.nav .wrap{display:flex;align-items:center;gap:18px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em;text-decoration:none;margin-right:auto}
+.brand svg{width:26px;height:26px;border-radius:7px}
+.nav a.l{color:var(--sub);text-decoration:none;font-size:14px}
+.nav a.l:hover{color:var(--text)}
+@media (max-width:520px){.nav a.l.hide-sm{display:none}}
+
+.head{padding-block:64px 24px}
+.eyebrow{margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.18em;color:var(--brass)}
+h1{margin:0;font-weight:500;font-size:clamp(42px,7vw,80px);line-height:.95;letter-spacing:-.045em}
+.lede{margin:18px 0 0;font-size:clamp(17px,2vw,20px);color:#C9D2E3;max-width:56ch}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:11px 18px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;font-family:inherit}
+.btn.primary{background:var(--text);color:var(--app)}
+.btn.primary:hover{background:#fff}
+.btn.ghost{color:var(--text);box-shadow:inset 0 0 0 1px var(--tline);background:transparent}
+.btn.ghost:hover{background:var(--tile-hi)}
+.btn.sm{font-size:13.5px;padding:7px 13px}
+
+.sec{padding-block:44px}
+.sec h2{margin:0 0 6px;font-weight:500;font-size:clamp(28px,3.6vw,38px);letter-spacing:-.03em;line-height:1.05}
+.sec .sub{margin:0 0 22px;color:var(--sub);max-width:60ch}
+
+.facts{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+@media (min-width:860px){.facts{grid-template-columns:repeat(3,1fr)}}
+.fact{background:var(--tile);border-radius:14px;padding:16px 18px}
+.fact span{display:block;font-size:12px;letter-spacing:.12em;color:var(--faint);font-weight:600;text-transform:uppercase}
+.fact b{display:block;margin-top:4px;font-weight:500;font-size:17px}
+
+.prods{display:grid;gap:14px}
+@media (min-width:860px){.prods{grid-template-columns:1fr 1fr}}
+.prod{background:var(--tile);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.prod img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#0A1020}
+.prod .body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.prod h3{margin:0;font-weight:500;font-size:24px;letter-spacing:-.02em;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.prod h3 .price{font-weight:600;font-size:18px;font-variant-numeric:tabular-nums}
+.prod p{margin:0;color:var(--sub)}
+.prod ul{margin:0;padding-left:18px;color:var(--sub)}
+.prod ul li{margin:3px 0}
+.prod .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+
+.vid{display:grid;gap:18px;align-items:start}
+@media (min-width:860px){.vid{grid-template-columns:1fr 280px}}
+.vid video{display:block;width:100%;border-radius:16px;background:#05080F}
+.vid .tall{max-width:280px;margin-inline:auto}
+@media (max-width:859px){.vid .tall{display:none}}
+.dl{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+
+.assets{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.asset{background:var(--tile);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.asset .pv{aspect-ratio:16/10;display:grid;place-items:center;padding:24px}
+.asset .pv.dark{background:#0E1016}
+.asset .pv.light{background:#F3F3F4}
+.asset .pv img{max-width:100%;max-height:100%;display:block}
+.asset .body{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.asset b{font-weight:500}
+
+.swatches{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:14px}
+.sw{border-radius:12px;overflow:hidden;background:var(--tile)}
+.sw i{display:block;height:64px}
+.sw div{padding:10px 12px;font-size:13px;color:var(--sub)}
+.sw div b{display:block;color:var(--text);font-weight:500;font-size:14px}
+
+.copy{background:var(--tile);border-radius:16px;padding:20px;margin-bottom:12px}
+.copy .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.copy .top span{font-size:12px;letter-spacing:.12em;color:var(--faint);font-weight:600;text-transform:uppercase}
+.copy p{margin:0;color:#D5D7DB;font-size:16px;max-width:75ch}
+.copy p+p{margin-top:10px}
+
+.contact{background:radial-gradient(90% 120% at 100% 100%,rgba(227,176,75,.14),transparent 60%),var(--tile);border-radius:18px;padding:28px}
+.contact p{color:var(--sub);margin:0 0 18px;max-width:58ch}
+
+footer{border-top:1px solid #222326;margin-top:40px}
+footer .wrap{padding-block:24px 30px;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;color:var(--faint);font-size:13px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+
+<div class="nav"><div class="wrap">
+ <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0A1020"/><path d="M8 50a40 40 0 0 1 48 0" fill="none" stroke="#E3B04B" stroke-width="3"/><g stroke="#FFE8AA" stroke-width="2.4" stroke-linecap="round"><path d="M32 14v24M20 26h24M24 18l16 16M40 18L24 34"/></g><circle cx="32" cy="26" r="7" fill="#E3B04B"/><circle cx="32" cy="26" r="3.5" fill="#FFF6DA"/></svg>Sounding Sonics</a>
+ <a class="l hide-sm" href="#products">Products</a>
+ <a class="l hide-sm" href="#assets">Assets</a>
+ <a class="l" href="#contact">Contact</a>
+</div></div>
+
+<header class="wrap head">
+ <p class="eyebrow">PRESS KIT</p>
+ <h1>Sounding Sonics</h1>
+ <p class="lede">Synths and mastering tools for Mac, made by a producer. Everything you need to write about or feature Supersonic and Machmaster is on this page.</p>
+ <div class="btns"><a class="btn primary" href="mailto:lanceskiiiwalker@gmail.com?subject=Sounding%20Sonics%20press">Email for press</a><a class="btn ghost" href="#assets">Download assets</a></div>
+</header>
+
+<section class="sec"><div class="wrap">
+ <div class="facts">
+  <div class="fact"><span>Launch</span><b>October 28, 2026</b></div>
+  <div class="fact"><span>Products</span><b>Supersonic · Machmaster</b></div>
+  <div class="fact"><span>Formats</span><b>AU, VST3, Standalone (macOS)</b></div>
+  <div class="fact"><span>Pricing</span><b>One-time purchase, no subscription</b></div>
+  <div class="fact"><span>Try it</span><b>Free browser demos</b></div>
+  <div class="fact"><span>Website</span><b><a href="/">soundingsonics.com</a></b></div>
+ </div>
+</div></section>
+
+<section class="sec" id="products"><div class="wrap">
+ <h2>Products</h2>
+ <p class="sub">Both run on Apple silicon and Intel Macs, are signed and notarized by Apple, and install with a double-click installer.</p>
+ <div class="prods">
+  <article class="prod">
+   <img src="/supersonic/og-image.png" alt="Supersonic cover art" loading="lazy">
+   <div class="body">
+    <h3>Supersonic <span class="price">$45</span></h3>
+    <p>An FM and phase-distortion synth that draws every note you play as a star, with a Warp pad you drag to reshape the sound.</p>
+    <ul>
+     <li>FM and phase-distortion engines</li>
+     <li>Warp pad for hands-on sound shaping</li>
+     <li>Visual modulation: watch your sound move</li>
+    </ul>
+    <div class="row">
+     <a class="btn ghost sm" href="/supersonic/">Product page</a>
+     <a class="btn ghost sm" href="/supersonic/thumb.png" download="supersonic-cover-square.png">Square art</a>
+     <a class="btn ghost sm" href="/supersonic/og-image.png" download="supersonic-cover-wide.png">Wide art</a>
+    </div>
+   </div>
+  </article>
+  <article class="prod">
+   <img src="/machmaster/og-image.png?v=2" alt="Machmaster cover art" loading="lazy">
+   <div class="body">
+    <h3>Machmaster <span class="price">$90</span></h3>
+    <p>A mastering suite that listens to your mix and sets itself up, taking a finished mix to release-ready loudness.</p>
+    <ul>
+     <li>EQ, exciter, multiband dynamics, stereo imager and true-peak maximizer</li>
+     <li>Listen mode sets the chain up from your mix</li>
+     <li>Built-in loudness (LUFS) meters</li>
+    </ul>
+    <div class="row">
+     <a class="btn ghost sm" href="/machmaster/">Product page</a>
+     <a class="btn ghost sm" href="/machmaster/thumb.png?v=2" download="machmaster-cover-square.png">Square art</a>
+     <a class="btn ghost sm" href="/machmaster/og-image.png?v=2" download="machmaster-cover-wide.png">Wide art</a>
+    </div>
+   </div>
+  </article>
+ </div>
+</div></section>
+
+<section class="sec" id="video"><div class="wrap">
+ <h2>Promo video</h2>
+ <p class="sub">24 seconds, with voiceover. Free to embed or re-post with credit to Sounding Sonics.</p>
+ <div class="vid">
+  <div>
+   <video src="/media/promo-wide.mp4" poster="/media/promo-wide-poster.jpg" controls playsinline preload="metadata" aria-label="Sounding Sonics promo video, widescreen"></video>
+   <div class="dl"><a class="btn ghost sm" href="/media/promo-wide.mp4" download="sounding-sonics-promo-16x9.mp4">Download 16:9 (1920×1080)</a><a class="btn ghost sm" href="/media/promo.mp4" download="sounding-sonics-promo-9x16.mp4">Download 9:16 (1080×1920)</a></div>
+  </div>
+  <video class="tall" src="/media/promo.mp4" poster="/media/promo-poster.jpg" controls playsinline preload="none" aria-label="Sounding Sonics promo video, vertical"></video>
+ </div>
+</div></section>
+
+<section class="sec" id="assets"><div class="wrap">
+ <h2>Logos and colors</h2>
+ <p class="sub">Please don't stretch, recolor or add effects to the logo. Use the light-text version on dark backgrounds and the dark-text version on light ones.</p>
+ <div class="assets">
+  <div class="asset"><div class="pv dark"><img src="sounding-sonics-mark.png" alt="Sounding Sonics icon" style="height:120px"></div><div class="body"><b>Icon</b><span style="display:flex;gap:6px"><a class="btn ghost sm" href="sounding-sonics-mark.png" download>PNG</a><a class="btn ghost sm" href="sounding-sonics-mark.svg" download>SVG</a></span></div></div>
+  <div class="asset"><div class="pv dark"><img src="sounding-sonics-wordmark-light-text.png" alt="Sounding Sonics logo, light text"></div><div class="body"><b>Logo, for dark backgrounds</b><a class="btn ghost sm" href="sounding-sonics-wordmark-light-text.png" download>PNG</a></div></div>
+  <div class="asset"><div class="pv light"><img src="sounding-sonics-wordmark-dark-text.png" alt="Sounding Sonics logo, dark text"></div><div class="body"><b>Logo, for light backgrounds</b><a class="btn ghost sm" href="sounding-sonics-wordmark-dark-text.png" download>PNG</a></div></div>
+ </div>
+ <div class="swatches">
+  <div class="sw"><i style="background:#141516;box-shadow:inset 0 0 0 1px #34363B"></i><div><b>Charcoal</b>#141516</div></div>
+  <div class="sw"><i style="background:#0A1020"></i><div><b>Night</b>#0A1020</div></div>
+  <div class="sw"><i style="background:#E3B04B"></i><div><b>Brass</b>#E3B04B</div></div>
+  <div class="sw"><i style="background:#3ED3C1"></i><div><b>Sea</b>#3ED3C1</div></div>
+  <div class="sw"><i style="background:#FF8A3D"></i><div><b>Machmaster orange</b>#FF8A3D</div></div>
+  <div class="sw"><i style="background:#F3F3F4"></i><div><b>Light</b>#F3F3F4</div></div>
+ </div>
+</div></section>
+
+<section class="sec" id="about"><div class="wrap">
+ <h2>About Sounding Sonics</h2>
+ <p class="sub">Ready to paste into an article, video description or show notes.</p>
+ <div class="copy"><div class="top"><span>Short</span><button class="btn ghost sm" data-copy="short">Copy</button></div>
+  <p id="short">Sounding Sonics makes synths and mastering tools for Mac, priced as one-time purchases with no subscription. Every plugin can be tried free in the browser before you buy.</p></div>
+ <div class="copy"><div class="top"><span>Long</span><button class="btn ghost sm" data-copy="long">Copy</button></div>
+  <div id="long"><p>Sounding Sonics is an independent plugin maker that builds instruments and mastering tools for Mac, made by a producer and tested in real sessions first. Its plugins run as AU, VST3 and Standalone apps in Logic Pro, GarageBand, Ableton Live, FL Studio, Bitwig and Reaper, and each one can be played free in a web browser before buying.</p>
+  <p>The first two releases, launching October 28, 2026, are Supersonic ($45), an FM and phase-distortion synth that draws every note you play as a star, and Machmaster ($90), a mastering suite that listens to a mix and sets itself up. Both are one-time purchases with no subscription. More at soundingsonics.com.</p></div></div>
+</div></section>
+
+<section class="sec" id="contact"><div class="wrap">
+ <div class="contact">
+  <h2>Contact</h2>
+  <p>For interviews, reviews, features and collaborations, email Sounding Sonics. Reviewers and creators can ask for a review copy.</p>
+  <div class="btns" style="margin-top:0"><a class="btn primary" href="mailto:lanceskiiiwalker@gmail.com?subject=Sounding%20Sonics%20press">lanceskiiiwalker@gmail.com</a><button class="btn ghost" data-copy-text="lanceskiiiwalker@gmail.com">Copy email</button></div>
+ </div>
+</div></section>
+
+<footer><div class="wrap">
+ <span>© 2026 Sounding Sonics</span>
+ <span><a href="/">Home</a> · <a href="/machmaster/">Machmaster</a> · <a href="/supersonic/">Supersonic</a></span>
+</div></footer>
+
+<script>
+document.querySelectorAll('[data-copy],[data-copy-text]').forEach(b=>b.addEventListener('click',async()=>{
+  const t=b.dataset.copyText||document.getElementById(b.dataset.copy).innerText.trim();
+  try{await navigator.clipboard.writeText(t);const o=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=o,1400)}catch(e){}
+}));
+</script>
+</body>
+</html>
