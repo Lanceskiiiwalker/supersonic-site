@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sounding Sonics: Plugins for Mac</title>
+<title>Synth &amp; Mastering Plugins for Mac (AU, VST3) | Sounding Sonics</title>
 <meta name="description" content="Sounding Sonics makes synths and mastering tools for Mac that light up when you play. Try every plugin free in your browser before you buy.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sounding Sonics">
 <meta property="og:description" content="Instruments that light up when you play. Synths for Mac you can try in your browser.">
 <meta property="og:image" content="https://www.soundingsonics.com/og-image.png">
 <meta property="og:url" content="https://www.soundingsonics.com/">
+<link rel="canonical" href="https://www.soundingsonics.com/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +46,7 @@ a{color:inherit}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .hero .wrap{position:relative;z-index:2;width:100%;padding-block:clamp(60px,10vh,110px) clamp(40px,7vh,72px)}
 .eyebrow{margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.18em;color:var(--brass)}
-.hero h1{margin:0;font-weight:500;font-size:clamp(46px,8.4vw,104px);line-height:.92;letter-spacing:-.045em;max-width:12ch;text-wrap:balance;text-shadow:0 10px 50px rgba(0,0,0,.5)}
+.hero h1{margin:0;font-weight:500;font-size:clamp(46px,8.4vw,104px);line-height:.92;letter-spacing:-.045em;max-width:14ch;text-wrap:balance;text-shadow:0 10px 50px rgba(0,0,0,.5)}
 .hero p.lede{margin:20px 0 0;font-size:clamp(17px,2vw,21px);color:#C9D2E3;max-width:44ch;line-height:1.45}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:11px 18px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
@@ -127,6 +128,38 @@ footer a{text-decoration:none}
 footer a:hover{color:var(--text)}
 @media (prefers-reduced-motion:reduce){.card,.card .art img{transition:none}}
 </style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "name": "Sounding Sonics",
+   "url": "https://www.soundingsonics.com/",
+   "logo": "https://www.soundingsonics.com/press/sounding-sonics-mark.png",
+   "sameAs": [
+    "https://www.instagram.com/soundingsonics/"
+   ]
+  },
+  {
+   "@type": "ItemList",
+   "name": "Sounding Sonics plugins",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "url": "https://www.soundingsonics.com/supersonic/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "url": "https://www.soundingsonics.com/machmaster/"
+    }
+   ]
+  }
+ ]
+}
+</script>
 </head>
 <body>
 
@@ -142,7 +175,7 @@ footer a:hover{color:var(--text)}
  <canvas id="sky" aria-hidden="true"></canvas>
  <div class="wrap">
   <p class="eyebrow">SOUNDING SONICS</p>
-  <h1>Instruments that light up when you play.</h1>
+  <h1>Synth plugins for Mac that light up when you play.</h1>
   <p class="lede">Synths and mastering tools for Mac with screens you'll want to look at. Every one can be tried free in your browser before you buy.</p>
   <div class="ctas"><a class="btn primary" href="#plugins">See the plugins</a><a class="btn ghost" href="/machmaster/">Try Machmaster</a><a class="btn ghost" href="/supersonic/">Play Supersonic</a></div>
  </div>
@@ -163,9 +196,33 @@ footer a:hover{color:var(--text)}
 <section class="sec" id="plugins" style="padding-top:24px"><div class="wrap">
  <div class="sec-head">
   <div><h2>Plugins</h2><p class="sub">AU, VST3 and Standalone for macOS. Each page has a playable demo.</p></div>
-  <span class="count" id="count"></span>
+  <span class="count" id="count">2 plugins available</span>
  </div>
- <div class="grid" id="grid"></div>
+ <!-- THE PLUGIN LIST. To add a plugin, copy one <article class="card"> and edit it (see README). -->
+ <div class="grid" id="grid">
+  <article class="card">
+   <a class="art" href="/supersonic/" aria-label="Supersonic"><img src="/supersonic/thumb.webp?v=2" alt="Supersonic FM synth plugin for Mac" width="1000" height="1000" loading="lazy"></a>
+   <div class="body">
+    <div class="row1"><h3><a href="/supersonic/">Supersonic</a></h3><span class="price">$45</span></div>
+    <p>FM and phase-distortion synth that draws every note you play as a star, with a Warp pad you drag to reshape the sound.</p>
+    <div class="tags"><span class="tag">New: Warp</span><span class="tag">Synth</span><span class="tag">AU · VST3 · Standalone</span></div>
+    <div class="acts"><a class="btn ghost sm" href="/supersonic/">Play the demo</a><a class="btn primary sm" href="https://9485186020752.gumroad.com/l/gxofm" target="_blank" rel="noopener">Buy $45</a></div>
+   </div>
+  </article>
+  <article class="card">
+   <a class="art" href="/machmaster/" aria-label="Machmaster"><img src="/machmaster/thumb.webp?v=2" alt="Machmaster mastering plugin for Mac" width="1000" height="1000" loading="lazy"></a>
+   <div class="body">
+    <div class="row1"><h3><a href="/machmaster/">Machmaster</a></h3><span class="price">$90</span></div>
+    <p>Mastering suite that listens to your mix and sets itself up: EQ, exciter, multiband dynamics, imager and a true-peak maximizer.</p>
+    <div class="tags"><span class="tag">New: Listen</span><span class="tag">Mastering</span><span class="tag">AU · VST3 · Standalone</span></div>
+    <div class="acts"><a class="btn ghost sm" href="/machmaster/">Play the demo</a><a class="btn primary sm" href="https://lanceskiiiwalker.gumroad.com/l/machmaster" target="_blank" rel="noopener">Buy $90</a></div>
+   </div>
+  </article>
+  <article class="card soon">
+   <div class="art"><canvas aria-hidden="true"></canvas><span>IN THE WORKS</span></div>
+   <div class="body"><div class="row1"><h3>Next instrument</h3></div><p>Something new is in the works. Check back soon.</p></div>
+  </article>
+ </div>
 </div></section>
 
 <section class="sec" id="film" style="padding-top:24px"><div class="wrap">
@@ -199,61 +256,9 @@ footer a:hover{color:var(--text)}
 </div></footer>
 
 <script>
-/* ---------------------------------------------------------------
-   THE PLUGIN LIST. To add a plugin, copy one entry and edit it.
-   status: "available" (shows price + Buy) or "soon" (coming soon card)
-   --------------------------------------------------------------- */
-const PLUGINS = [
-  {
-    name: "Supersonic",
-    status: "available",
-    tagline: "FM and phase-distortion synth that draws every note you play as a star, with a Warp pad you drag to reshape the sound.",
-    price: "$45",
-    page: "/supersonic/",
-    buy: "https://9485186020752.gumroad.com/l/gxofm",
-    image: "/supersonic/thumb.png?v=2",
-    tags: ["New: Warp", "Synth", "AU · VST3 · Standalone"]
-  },
-  {
-    name: "Machmaster",
-    status: "available",
-    tagline: "Mastering suite that listens to your mix and sets itself up: EQ, exciter, multiband dynamics, imager and a true-peak maximizer.",
-    price: "$90",
-    page: "/machmaster/",
-    buy: "https://lanceskiiiwalker.gumroad.com/l/machmaster",
-    image: "/machmaster/thumb.png?v=2",
-    tags: ["New: Listen", "Mastering", "AU · VST3 · Standalone"]
-  },
-  {
-    name: "Next instrument",
-    status: "soon",
-    tagline: "Something new is in the works. Check back soon."
-  }
-];
-
-const grid=document.getElementById('grid');
-const live=PLUGINS.filter(p=>p.status==='available').length;
+/* plugin cards are plain HTML in #grid; keep the count in step with them */
+const live=document.querySelectorAll('#grid .card:not(.soon)').length;
 document.getElementById('count').textContent=live+(live===1?' plugin':' plugins')+' available';
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-PLUGINS.forEach(p=>{
-  const el=document.createElement('article');
-  if(p.status==='soon'){
-    el.className='card soon';
-    el.innerHTML=`<div class="art"><canvas aria-hidden="true"></canvas><span>IN THE WORKS</span></div>
-      <div class="body"><div class="row1"><h3>${esc(p.name)}</h3></div><p>${esc(p.tagline)}</p></div>`;
-  }else{
-    el.className='card';
-    const tags=(p.tags||[]).map((t,i)=>`<span class="tag${i===0&&t==='New'?' new':''}">${esc(t)}</span>`).join('');
-    el.innerHTML=`<a class="art" href="${esc(p.page)}" aria-label="${esc(p.name)}"><img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy"></a>
-      <div class="body">
-        <div class="row1"><h3><a href="${esc(p.page)}">${esc(p.name)}</a></h3><span class="price">${esc(p.price)}</span></div>
-        <p>${esc(p.tagline)}</p>
-        <div class="tags">${tags}</div>
-        <div class="acts"><a class="btn ghost sm" href="${esc(p.page)}">Play the demo</a><a class="btn primary sm" href="${esc(p.buy)}" target="_blank" rel="noopener">Buy ${esc(p.price)}</a></div>
-      </div>`;
-  }
-  grid.appendChild(el);
-});
 
 /* ---------- ambient sky (hero + coming-soon card) ---------- */
 const still=matchMedia('(prefers-reduced-motion: reduce)').matches;

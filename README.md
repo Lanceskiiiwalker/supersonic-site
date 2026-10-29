@@ -19,21 +19,15 @@ supersonic/           Supersonic page -> soundingsonics.com/supersonic/
 
 1. Make a folder named after the plugin, e.g. `nextsynth/`, with its own `index.html`,
    `og-image.png` (1280x720) and `thumb.png` (1000x1000).
-2. In the home page `index.html`, find `const PLUGINS = [` and add an entry:
-
-```js
-{
-  name: "Next Synth",
-  status: "available",            // or "soon" for a coming-soon card
-  tagline: "One line about what it does.",
-  price: "$29",
-  page: "/nextsynth/",
-  buy: "https://...gumroad.com/l/...",
-  image: "/nextsynth/thumb.png",
-  tags: ["New", "Synth", "AU · VST3 · Standalone"]
-},
-```
-
+   Also make a small WebP copy of the thumb for the home page card:
+   `cwebp -q 82 -m 6 nextsynth/thumb.png -o nextsynth/thumb.webp`
+2. In the home page `index.html`, find `THE PLUGIN LIST` and copy one
+   `<article class="card">...</article>` block. Edit the name, price, tagline, tags,
+   page link, Gumroad link and image (`/nextsynth/thumb.webp`). The cards are plain HTML
+   so search engines can read them; the "N plugins available" count updates itself.
 3. Remove the "New" tag from the older plugin if you like, and delete or keep the
-   "Next instrument" coming-soon entry.
-4. Commit. The site updates about a minute later.
+   "Next instrument" coming-soon card.
+4. SEO for the new page: give it a `<link rel="canonical">`, copy the Product
+   `application/ld+json` block from `supersonic/index.html` and edit it, add the page
+   to `sitemap.xml`, and add its URL to the ItemList block in the home page `<head>`.
+5. Commit. The site updates about a minute later.
