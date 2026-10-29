@@ -141,6 +141,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .sec{padding-block:40px}
 .sec h2.big{font-weight:500;font-size:clamp(30px,4.4vw,44px);letter-spacing:-.03em;margin:0 0 8px;text-wrap:balance}
 .sec p.sub{color:var(--sub);font-size:16px;margin:0 0 22px;max-width:60ch;line-height:1.5}
+.film{display:grid;gap:26px;align-items:center}
+.film video{display:block;width:min(100%,340px);aspect-ratio:9/16;margin-inline:auto;border-radius:18px;background:#05080F;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.film .ctas{display:flex;flex-wrap:wrap;gap:10px}
+@media (min-width:820px){.film{grid-template-columns:1fr auto;gap:48px}.film video{margin-inline:0}}
 .demo-box{border-radius:20px;background:#1B1C1E;padding-block:12px;box-shadow:0 0 0 1px #24262b}
 .demo-box .app{padding-inline:12px}
 .demo-box .kbd{padding-inline:12px;background:transparent}
@@ -228,6 +232,15 @@ details code{font-size:12.5px;background:#1A1B1D;padding:2px 5px;border-radius:4
   <div class="tile"><svg viewBox="0 0 32 32"><path d="M8 5v22M16 5v22M24 5v22"/><circle cx="8" cy="19" r="2.6" fill="var(--tile)"/><circle cx="16" cy="11" r="2.6" fill="var(--tile)"/><circle cx="24" cy="16" r="2.6" fill="var(--tile)"/></svg><h3>10 factory presets</h3><p>Tine Keys, Glass Bell, Solid Bass, Brass Stab, Drawbar Organ, Wire Lead, CZ Bass, Reso Pad, Pulse Lead and Fold Pluck.</p></div>
   <div class="tile"><svg viewBox="0 0 32 32"><path d="M3 11h13c4 0 5.5 2.5 7 7l2.5 7"/><path d="M5 27h22" opacity=".4"/></svg><h3>Built-in effects</h3><p>Tone filter, echo, reverb and a soft limiter. Every control can be automated in your DAW.</p></div>
  </div>
+</div></section>
+
+<section class="sec" id="film"><div class="wrap film">
+ <div>
+  <h2 class="big">Made his day</h2>
+  <p class="sub">A rainy night, a quiet room, one ad on the screen. A short film about what happens when someone finds their sound.</p>
+  <div class="ctas"><a class="buy" href="#buy" data-buy>Buy for <b>$45</b></a><a class="ghost" href="#demo">Try it free</a></div>
+ </div>
+ <video src="/media/made-his-day.mp4" poster="/media/made-his-day-poster.jpg" controls playsinline preload="metadata" aria-label="Made his day, a short animated film about Supersonic"></video>
 </div></section>
 
 <section class="sec" id="skies"><div class="wrap">
