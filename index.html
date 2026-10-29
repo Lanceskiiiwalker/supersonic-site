@@ -98,6 +98,15 @@ a{color:inherit}
 .point b{display:block;font-weight:500;font-size:16px}
 .point span{color:var(--sub);font-size:14px}
 
+/* short film */
+.filmcard{display:grid;gap:26px;align-items:center;border-radius:24px;padding:24px;background:linear-gradient(140deg,#2a303f 0%,#33324a 50%,#7a4f6c 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);overflow:hidden}
+.filmcard video{display:block;width:min(100%,300px);aspect-ratio:9/16;margin-inline:auto;border-radius:16px;background:#05080F;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.filmcard .kick{font-size:12px;font-weight:600;letter-spacing:.14em;color:#f3a3bf;margin:0 0 10px}
+.filmcard p.sub{max-width:44ch}
+.filmcard .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+@media (max-width:520px){.nav a.l.fl{display:none}}
+@media (min-width:820px){.filmcard{grid-template-columns:300px 1fr;padding:40px 56px;gap:56px}.filmcard video{margin-inline:0}}
+
 /* promo video */
 .promo{display:grid;gap:28px;align-items:center}
 .promo p.sub{font-size:16.5px}
@@ -125,6 +134,7 @@ footer a:hover{color:var(--text)}
  <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0A1020"/><path d="M8 50a40 40 0 0 1 48 0" fill="none" stroke="#E3B04B" stroke-width="3"/><g stroke="#FFE8AA" stroke-width="2.4" stroke-linecap="round"><path d="M32 14v24M20 26h24M24 18l16 16M40 18L24 34"/></g><circle cx="32" cy="26" r="7" fill="#E3B04B"/><circle cx="32" cy="26" r="3.5" fill="#FFF6DA"/></svg>Sounding Sonics</a>
  <a class="l" href="#watch">Watch</a>
  <a class="l" href="#plugins">Plugins</a>
+ <a class="l fl" href="#film">Film</a>
  <a class="l" href="#about">About</a>
 </div></div>
 
@@ -156,6 +166,18 @@ footer a:hover{color:var(--text)}
   <span class="count" id="count"></span>
  </div>
  <div class="grid" id="grid"></div>
+</div></section>
+
+<section class="sec" id="film" style="padding-top:24px"><div class="wrap">
+ <div class="filmcard">
+  <video src="/media/made-his-day.mp4" poster="/media/made-his-day-poster.jpg" controls playsinline preload="metadata" aria-label="Made his day, a short animated film about Supersonic"></video>
+  <div>
+   <p class="kick">SHORT FILM</p>
+   <h2>Made his day</h2>
+   <p class="sub" style="margin-top:14px">A rainy night, a quiet room, one ad on the screen. Thirty seconds about what happens when someone finds their sound.</p>
+   <div class="ctas"><a class="btn primary" href="/supersonic/">Get Supersonic</a><a class="btn ghost" href="/supersonic/#demo">Play it free</a></div>
+  </div>
+ </div>
 </div></section>
 
 <section class="sec" id="about" style="padding-top:24px"><div class="wrap about">
