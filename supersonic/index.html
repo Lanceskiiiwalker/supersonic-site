@@ -224,7 +224,22 @@ details code{font-size:12.5px;background:#1A1B1D;padding:2px 5px;border-radius:4
   "price": "45.00",
   "priceCurrency": "USD",
   "availability": "https://schema.org/InStock",
-  "url": "https://9485186020752.gumroad.com/l/gxofm"
+  "url": "https://9485186020752.gumroad.com/l/gxofm",
+  "shippingDetails": {
+   "@type": "OfferShippingDetails",
+   "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "USD" },
+   "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+   "deliveryTime": {
+    "@type": "ShippingDeliveryTime",
+    "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" },
+    "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" }
+   }
+  },
+  "hasMerchantReturnPolicy": {
+   "@type": "MerchantReturnPolicy",
+   "applicableCountry": "US",
+   "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+  }
  }
 }
 </script>
