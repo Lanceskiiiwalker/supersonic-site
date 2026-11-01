@@ -159,6 +159,11 @@ footer a:hover{color:var(--text)}
      "@type": "ListItem",
      "position": 3,
      "url": "https://www.soundingsonics.com/dubcassette/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "url": "https://www.soundingsonics.com/sonic-sidekick/"
     }
    ]
   }
@@ -200,17 +205,26 @@ footer a:hover{color:var(--text)}
 
 <section class="sec" id="plugins" style="padding-top:24px"><div class="wrap">
  <div class="sec-head">
-  <div><h2>Plugins</h2><p class="sub">AU, VST3 and Standalone for macOS. Each page has a playable demo.</p></div>
+  <div><h2>Plugins</h2><p class="sub">AU, VST3 and Standalone for macOS, plus Sonic Sidekick, a producer assistant app. Each page has a demo.</p></div>
   <span class="count" id="count">2 plugins available</span>
  </div>
  <!-- THE PLUGIN LIST. To add a plugin, copy one <article class="card"> and edit it (see README). -->
  <div class="grid" id="grid">
+  <article class="card app">
+   <a class="art" href="/sonic-sidekick/" aria-label="Sonic Sidekick"><img src="/sonic-sidekick/thumb.webp" alt="Sonic Sidekick AI producer assistant app for Mac" width="1000" height="1000" loading="lazy"></a>
+   <div class="body">
+    <div class="row1"><h3><a href="/sonic-sidekick/">Sonic Sidekick</a></h3><span class="price">$50</span></div>
+    <p>Machmaster's AI companion: it masters for you by turning Machmaster's knobs. On its own, a co-producer that helps you build tracks with ideas, sound design and MIDI that plays straight into Logic.</p>
+    <div class="tags"><span class="tag new">New</span><span class="tag">AI assistant</span><span class="tag">Mac app · Logic Pro</span></div>
+    <div class="acts"><a class="btn ghost sm" href="/sonic-sidekick/">See it work</a><a class="btn primary sm" href="/sonic-sidekick/#buy" data-sidekick-buy>Buy $50</a></div>
+   </div>
+  </article>
   <article class="card">
    <a class="art" href="/dubcassette/" aria-label="Dubcassette"><img src="/dubcassette/thumb.webp" alt="Dubcassette tape delay plugin for Mac" width="1000" height="1000" loading="lazy"></a>
    <div class="body">
     <div class="row1"><h3><a href="/dubcassette/">Dubcassette</a></h3><span class="price">$60</span></div>
     <p>Cassette tape delay and reverb with four tape speeds, three tape types, varispeed from half to double speed and a tape-stop brake.</p>
-    <div class="tags"><span class="tag new">New</span><span class="tag">Delay · Reverb</span><span class="tag">AU · VST3 · Standalone</span></div>
+    <div class="tags"><span class="tag">Delay · Reverb</span><span class="tag">AU · VST3 · Standalone</span></div>
     <div class="acts"><a class="btn ghost sm" href="/dubcassette/">Play the demo</a><a class="btn primary sm" href="https://lanceskiiiwalker.gumroad.com/l/dubcassette" target="_blank" rel="noopener">Buy $60</a></div>
    </div>
   </article>
@@ -262,12 +276,12 @@ footer a:hover{color:var(--text)}
 
 <footer><div class="wrap">
  <span>© 2026 Sounding Sonics</span>
- <span><a href="#plugins">Plugins</a> · <a href="/machmaster/">Machmaster</a> · <a href="/supersonic/">Supersonic</a> · <a href="/dubcassette/">Dubcassette</a> · <a href="/press/">Press</a> · <a href="https://www.instagram.com/soundingsonics/" target="_blank" rel="noopener">Instagram</a></span>
+ <span><a href="#plugins">Plugins</a> · <a href="/machmaster/">Machmaster</a> · <a href="/supersonic/">Supersonic</a> · <a href="/dubcassette/">Dubcassette</a> · <a href="/sonic-sidekick/">Sonic Sidekick</a> · <a href="/press/">Press</a> · <a href="https://www.instagram.com/soundingsonics/" target="_blank" rel="noopener">Instagram</a></span>
 </div></footer>
 
 <script>
 /* plugin cards are plain HTML in #grid; keep the count in step with them */
-const live=document.querySelectorAll('#grid .card:not(.soon)').length;
+const live=document.querySelectorAll('#grid .card:not(.soon):not(.app)').length;
 document.getElementById('count').textContent=live+(live===1?' plugin':' plugins')+' available';
 
 /* ---------- ambient sky (hero + coming-soon card) ---------- */

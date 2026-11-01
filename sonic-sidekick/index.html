@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sonic Sidekick: AI Producer Assistant for Logic Pro on Mac | Sounding Sonics</title>
+<meta name="description" content="Sonic Sidekick is Machmaster's AI companion and a co-producer in your Mac's menu bar: it masters with Machmaster for you, and helps you create tracks from scratch with ideas, sound design and MIDI that plays straight into Logic.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sonic Sidekick: a producer in your menu bar">
+<meta property="og:description" content="Machmaster's AI companion and your co-producer. It turns Machmaster's knobs for you, and helps you build tracks with ideas, sound design and MIDI that plays into Logic.">
+<meta property="og:image" content="https://www.soundingsonics.com/sonic-sidekick/og-image.png">
+<meta property="og:url" content="https://www.soundingsonics.com/sonic-sidekick/">
+<link rel="canonical" href="https://www.soundingsonics.com/sonic-sidekick/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: site nav; hero (copy left, live panel mock right, stacks on phones); "see it work" tabs driving the
+   same panel; feature grid; cost strip; specs; FAQ; buy. Dark charcoal site chrome, with the app's plum + orange. */
+:root{
+  --app:#141516; --tile:#222326; --tile-hi:#2C2E32; --tline:#34363B; --text:#F3F3F4; --sub:#A4A7AD; --faint:#6E7177;
+  --plum:#1d1226; --plum2:#2a1c35; --field:#33283f; --orange:#ff8c2e; --gold:#ffd27a; --green:#4ade80;
+  --f:"Inter Tight","Helvetica Neue",Arial,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--app);color:var(--text);font-family:var(--f);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+img{max-width:100%}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(20,21,22,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #222326}
+.nav .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
+.wm{margin-right:auto;font-weight:600;font-size:16px;white-space:nowrap}
+.wm a{text-decoration:none}
+.wm .crumb{color:var(--faint);margin:0 8px}
+.nav a.l{color:var(--sub);text-decoration:none;font-size:14px}
+.nav a.l:hover{color:var(--text)}
+@media (max-width:560px){.nav a.l{display:none}}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:11px 18px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;font-family:inherit}
+.btn.primary{background:var(--orange);color:#1a0d02}
+.btn.primary:hover{background:#ffa055}
+.btn.ghost{color:var(--text);box-shadow:inset 0 0 0 1px var(--tline);background:transparent}
+.btn.ghost:hover{background:var(--tile-hi)}
+.btn.sm{font-size:13.5px;padding:8px 14px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:radial-gradient(70% 90% at 75% 20%,#3a2347 0%,#1d1226 45%,#0e0a12 100%)}
+.hero .wrap{display:grid;gap:36px;align-items:center;padding-block:clamp(48px,8vh,88px)}
+@media (min-width:900px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
+.eyebrow{margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.18em;color:var(--gold)}
+.hero h1{margin:0;font-weight:500;font-size:clamp(40px,6.4vw,76px);line-height:.95;letter-spacing:-.04em;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.lede{margin:20px 0 0;font-size:clamp(17px,1.9vw,20px);color:#d8cfe0;max-width:46ch;line-height:1.45}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.fine{margin-top:14px;font-size:13px;color:var(--sub)}
+
+/* the panel mock (mirrors the real app) */
+.panel{width:100%;max-width:440px;margin-inline:auto;background:var(--plum);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.07);overflow:hidden;font-size:13px}
+.p-top{padding:12px 14px 10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.p-dots{display:flex;gap:6px;margin-bottom:10px}.p-dots i{width:10px;height:10px;border-radius:50%;background:#4a3d55}
+.p-title{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.p-title svg{width:18px;height:18px}
+.badge{font-size:9px;font-weight:700;letter-spacing:.06em;color:#b9aec4;background:var(--field);border-radius:999px;padding:2px 7px}
+.badge .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px;vertical-align:1px}
+.p-fields{display:flex;gap:6px;margin-top:10px}
+.p-fields span{background:var(--field);border-radius:7px;padding:5px 8px;font-size:11px;color:#b9aec4}
+.p-fields b{color:var(--text);font-weight:600;margin-left:4px}
+.p-body{padding:14px;display:flex;flex-direction:column;gap:11px;min-height:330px}
+.msg-u{align-self:flex-end;max-width:85%;background:rgba(255,140,46,.22);border-radius:11px;padding:7px 10px}
+.msg-a{max-width:100%;color:#ece4f1;line-height:1.45}
+.msg-a b{color:#fff}
+.shot{align-self:flex-end;width:62%;border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.card{background:var(--plum2);border-radius:10px;padding:10px;box-shadow:inset 0 0 0 1px rgba(255,140,46,.4)}
+.card .h{display:flex;align-items:center;gap:8px;font-weight:600;font-size:12px}
+.card .s{color:#b9aec4;font-size:11px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:11px;font-weight:600;background:var(--field);border-radius:999px;padding:4px 9px;color:#ece4f1}
+.mono{font-family:var(--mono);font-size:10.5px;color:#b9aec4;line-height:1.6}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:8px}
+.meters div{font-size:9px;color:#b9aec4;font-weight:600}.meters b{display:block;font-family:var(--mono);font-size:12px;color:#fff}
+.bars{display:grid;gap:3px;margin-top:8px}
+.bars div{display:grid;grid-template-columns:62px 1fr;gap:6px;align-items:center;font-size:9px;color:#b9aec4}
+.bars i{display:block;height:7px;border-radius:2px;background:var(--orange);opacity:.85}
+.p-foot{border-top:1px solid rgba(255,255,255,.07);padding:10px 14px;display:flex;gap:8px;align-items:center;background:#24172e}
+.p-in{flex:1;background:var(--field);border-radius:9px;padding:8px 10px;color:#8f829c;font-size:12px}
+.typing{display:inline-flex;gap:3px}.typing i{width:5px;height:5px;border-radius:50%;background:#b9aec4;animation:b 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.reveal{animation:in .35s ease both}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.reveal,.typing i{animation:none}}
+
+/* sections */
+.sec{padding-block:64px}
+.sec h2{margin:0;font-weight:500;font-size:clamp(30px,4.2vw,44px);letter-spacing:-.03em;line-height:1.05}
+.sub{margin:10px 0 0;color:var(--sub);max-width:60ch;font-size:16px}
+
+/* see it work */
+.demo{display:grid;gap:28px;align-items:start;margin-top:28px}
+@media (min-width:900px){.demo{grid-template-columns:1fr 440px}}
+.tabs{display:grid;gap:10px}
+.tab{text-align:left;background:var(--tile);border:0;border-radius:14px;padding:16px 18px;color:var(--text);font-family:inherit;cursor:pointer;display:grid;gap:4px;box-shadow:inset 0 0 0 1px transparent;transition:background .2s,box-shadow .2s}
+.tab:hover{background:var(--tile-hi)}
+.tab[aria-selected="true"]{background:var(--tile-hi);box-shadow:inset 0 0 0 1.5px var(--orange)}
+.tab b{font-weight:500;font-size:17px}
+.tab span{color:var(--sub);font-size:14px}
+.tab kbd{font-family:var(--mono);font-size:11px;background:#111;border-radius:5px;padding:1px 6px;color:var(--gold);box-shadow:inset 0 0 0 1px var(--tline)}
+.note{font-size:12.5px;color:var(--faint);margin-top:8px}
+
+/* features */
+.feat{display:grid;gap:14px;margin-top:26px;grid-template-columns:1fr}
+@media (min-width:700px){.feat{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1020px){.feat{grid-template-columns:repeat(3,1fr)}}
+.f{background:var(--tile);border-radius:16px;padding:20px}
+.f svg{width:28px;height:28px;fill:none;stroke:var(--orange);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.f b{display:block;font-weight:500;font-size:18px;margin:12px 0 6px}
+.f p{margin:0;color:var(--sub);font-size:14.5px}
+
+/* cost */
+.cost{display:grid;gap:14px;margin-top:26px}
+@media (min-width:860px){.cost{grid-template-columns:repeat(3,1fr)}}
+.c{border-radius:16px;padding:20px;box-shadow:inset 0 0 0 1.5px var(--tline)}
+.c .n{font-size:30px;font-weight:600;letter-spacing:-.02em}
+.c p{margin:6px 0 0;color:var(--sub);font-size:14.5px}
+
+/* specs + faq */
+.specs{display:grid;gap:0;margin-top:22px;border-top:1px solid var(--tline)}
+.specs div{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--tline)}
+.specs dt{color:var(--sub);margin:0}.specs dd{margin:0}
+@media (max-width:560px){.specs div{grid-template-columns:1fr;gap:2px}}
+.faq{display:grid;gap:10px;margin-top:22px}
+.faq details{background:var(--tile);border-radius:14px;padding:4px 18px}
+.faq summary{cursor:pointer;padding:14px 0;font-weight:500;font-size:16px;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";float:right;color:var(--sub)}
+.faq details[open] summary::after{content:"–"}
+.faq p,.faq ol{margin:0 0 16px;color:var(--sub)}
+.faq li{margin-bottom:6px}
+code{font-family:var(--mono);font-size:.88em;background:#111;border-radius:5px;padding:1px 5px}
+
+.final{text-align:center;padding-block:64px 84px;display:grid;justify-items:center;gap:12px}
+.final h2{margin:0;font-weight:500;font-size:clamp(34px,5vw,54px);letter-spacing:-.03em}
+.final p{margin:0 0 6px;color:var(--sub);font-size:16.5px}
+.final .price{font-size:40px;font-weight:600}
+footer{border-top:1px solid #222326}
+footer .wrap{padding-block:24px 30px;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;color:var(--faint);font-size:13px}
+footer a{text-decoration:none}footer a:hover{color:var(--text)}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Product",
+ "name": "Sonic Sidekick",
+ "description": "AI producer assistant for Mac and Logic Pro: screenshot your session and ask, generate MIDI that plays straight into Logic, check your mix with real measurements, and control the Machmaster mastering plugin.",
+ "category": "Music production software",
+ "url": "https://www.soundingsonics.com/sonic-sidekick/",
+ "image": [
+  "https://www.soundingsonics.com/sonic-sidekick/thumb.png",
+  "https://www.soundingsonics.com/sonic-sidekick/og-image.png"
+ ],
+ "brand": { "@type": "Brand", "name": "Sounding Sonics" },
+ "offers": {
+  "@type": "Offer",
+  "price": "50.00",
+  "priceCurrency": "USD",
+  "availability": "https://schema.org/InStock",
+  "url": "https://www.soundingsonics.com/sonic-sidekick/",
+  "hasMerchantReturnPolicy": {
+   "@type": "MerchantReturnPolicy",
+   "applicableCountry": "US",
+   "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+  }
+ }
+}
+</script>
+</head>
+<body>
+
+<div class="nav"><div class="wrap">
+ <span class="wm"><a href="/">Sounding Sonics</a><span class="crumb">/</span>Sonic Sidekick</span>
+ <a class="l" href="#see">See it work</a><a class="l" href="#features">Features</a><a class="l" href="#faq">FAQ</a>
+ <a class="btn primary sm" href="#buy" data-buy>Buy · $50</a>
+</div></div>
+
+<header class="hero">
+ <div class="wrap">
+  <div>
+   <p class="eyebrow">SONIC SIDEKICK · MACHMASTER'S AI COMPANION</p>
+   <h1>A producer in your <em>menu bar</em>.</h1>
+   <p class="lede">Pair it with Machmaster and it masters for you, reading the meters and turning the knobs. Use it on its own and it's a co-producer from the first idea: grab any part of your screen and ask, get drums and chords that play straight into Logic, and check your mix with real numbers.</p>
+   <div class="ctas"><a class="btn primary" href="#buy" data-buy>Buy Sonic Sidekick · $50</a><a class="btn ghost" href="#see">See it work</a></div>
+   <p class="fine">Mac app · Apple silicon and Intel · macOS 13 or later · Uses your own Claude API key, or a free mode that runs on your Mac</p>
+  </div>
+  <div class="panel" id="panel" aria-live="polite" aria-label="Sonic Sidekick panel preview"></div>
+ </div>
+</header>
+
+<section class="sec" id="ways"><div class="wrap">
+ <h2>Three ways to use it</h2>
+ <div class="cost">
+  <div class="c"><div class="n" style="font-size:24px">With Machmaster</div><p>Machmaster's companion. Ask "master this for streaming" or "louder but clean" and Sidekick reads Machmaster's loudness meters, sets the EQ, dynamics, imager and maximizer, then checks the result. Every move has Undo.</p></div>
+  <div class="c"><div class="n" style="font-size:24px">On its own</div><p>A co-producer for building tracks. Screenshot your session and ask what's missing, get patch recipes for the synth on screen, and drop in drums, chords, basslines and melodies that play straight into Logic.</p></div>
+  <div class="c"><div class="n" style="font-size:24px">Before you master</div><p>Drop a bounce for a mix check: loudness, true peak, dynamics, tonal balance and stereo, measured on your Mac, with exact fixes for what's off.</p></div>
+ </div>
+</div></section>
+
+<section class="sec" id="see" style="padding-top:24px"><div class="wrap">
+ <h2>See it work</h2>
+ <p class="sub">Pick a moment from a session. The panel shows what Sonic Sidekick does in the real app.</p>
+ <div class="demo">
+  <div class="tabs" role="tablist" aria-label="Examples">
+   <button class="tab" role="tab" data-scene="finish"><b>Finish the beat</b><span>Press <kbd>⌃⌥S</kbd>, drag over your arrange window, and ask what's missing.</span></button>
+   <button class="tab" role="tab" data-scene="midi"><b>Get MIDI that plays into Logic</b><span>Ask for drums, chords or a bassline. Hit Play into Logic and it plays on your selected track.</span></button>
+   <button class="tab" role="tab" data-scene="mix"><b>Check your mix</b><span>Drop a bounce on the panel. It measures loudness, peaks, tone and stereo, then gives exact fixes.</span></button>
+   <button class="tab" role="tab" data-scene="master"><b>Master with Machmaster</b><span>With Machmaster open, Sidekick reads its meters and turns the knobs itself, with Undo.</span></button>
+   <p class="note">Example session for illustration. Answers depend on your track.</p>
+  </div>
+  <div class="panel" id="panel2" aria-live="polite" aria-label="Sonic Sidekick example"></div>
+ </div>
+</div></section>
+
+<section class="sec" id="features" style="padding-top:24px"><div class="wrap">
+ <h2>Everything it does</h2>
+ <div class="feat">
+  <div class="f"><svg viewBox="0 0 32 32"><path d="M5 11V6h5M27 11V6h-5M5 21v5h5M27 21v5h-5"/><circle cx="16" cy="16" r="4"/></svg><b>Screenshot and ask</b><p><kbd style="font-family:var(--mono);font-size:12px">⌃⌥S</kbd> anywhere: the arrange window, the piano roll, a plugin. It reads track names, notes and knob values, and answers about what you're actually looking at.</p></div>
+  <div class="f"><svg viewBox="0 0 32 32"><rect x="12" y="4" width="8" height="15" rx="4"/><path d="M7 15a9 9 0 0 0 18 0M16 24v4"/></svg><b>Talk to it</b><p>Hands on your keys? Press <kbd style="font-family:var(--mono);font-size:12px">⌃⌥V</kbd> and say it: "darker chords", "more bounce in the hats". It uses Apple's built-in speech recognition.</p></div>
+  <div class="f"><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="16" rx="2"/><path d="M10 8v10M16 8v10M22 8v10"/></svg><b>MIDI straight into Logic</b><p>Drum grooves, chord progressions, basslines and melodies in your tempo and key. Play them into the selected track, record in one click, or drag the file in.</p></div>
+  <div class="f"><svg viewBox="0 0 32 32"><path d="M4 22h4V12H4zM11 22h4V6h-4zM18 22h4V15h-4zM25 22h4V9h-4z"/><path d="M3 26h26"/></svg><b>Mix check</b><p>Drop a bounce and it measures loudness (LUFS), true peak, dynamics, tonal balance, stereo width and low-end mono, then tells you what to fix and by how much.</p></div>
+  <div class="f"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/><path d="M16 16l5-5M16 6v3M26 16h-3M16 26v-3M6 16h3"/></svg><b>Turns Machmaster's knobs</b><p>With Machmaster 1.5 or later open, ask "master this for streaming" and Sidekick sets EQ, dynamics and the limiter, reads the meters, and adjusts again. Every change has Undo.</p></div>
+  <div class="f"><svg viewBox="0 0 32 32"><path d="M6 20a10 10 0 1 1 20 0"/><path d="M16 20l6-7"/><path d="M4 26h24"/></svg><b>Knows your tools</b><p>Patch recipes for Alchemy, Retro Synth, ES2, Sculpture and Drum Machine Designer, plus Supersonic and Machmaster settings, and arrangement plans with bar counts.</p></div>
+ </div>
+</div></section>
+
+<section class="sec" id="cost" style="padding-top:24px"><div class="wrap">
+ <h2>What it costs</h2>
+ <p class="sub">Pay once for the app. The AI answers run on Anthropic's Claude with your own API key, so you only pay for what you use, straight to Anthropic, with no subscription to us.</p>
+ <div class="cost">
+  <div class="c"><div class="n">$50 once</div><p>The app, on two of your Macs. No subscription.</p></div>
+  <div class="c"><div class="n">A few cents a question</div><p>Typical cost with a screenshot. $5 of Claude credit covers hundreds of questions. You set the budget in your Anthropic account.</p></div>
+  <div class="c"><div class="n">Or $0 per question</div><p>Free mode runs an AI model on your own Mac with Ollama. Slower and less sharp at reading screens, but costs nothing to use.</p></div>
+ </div>
+</div></section>
+
+<section class="sec" id="specs" style="padding-top:24px"><div class="wrap">
+ <h2>Specs</h2>
+ <dl class="specs">
+  <div><dt>Type</dt><dd>Menu-bar app for macOS (not a plugin)</dd></div>
+  <div><dt>Mac</dt><dd>macOS 13 Ventura or later, Apple silicon and Intel</dd></div>
+  <div><dt>DAW</dt><dd>Made for Logic Pro. Screenshots, advice, MIDI files and mix checks work with any DAW. Play into Logic uses a "Sonic Sidekick" MIDI input that any DAW can record.</dd></div>
+  <div><dt>Machmaster control</dt><dd>Machmaster 1.5 or later, open in your session on the same Mac</dd></div>
+  <div><dt>AI</dt><dd>Your Claude API key (stored in your Mac's Keychain), or free local mode via Ollama</dd></div>
+  <div><dt>Shortcuts</dt><dd><code>⌃⌥S</code> capture and ask · <code>⌃⌥V</code> talk</dd></div>
+  <div><dt>License</dt><dd>Two Macs per purchase. Signed and notarized by Apple.</dd></div>
+ </dl>
+</div></section>
+
+<section class="sec" id="faq" style="padding-top:24px"><div class="wrap">
+ <h2>Questions</h2>
+ <div class="faq">
+  <details><summary>How do I install it?</summary><ol><li>Unzip <code>SonicSidekick-mac.zip</code> from your download and drag <b>Sonic Sidekick</b> into Applications.</li><li>Open it. A waveform icon appears in your menu bar, and the panel asks for the license key from your Gumroad receipt.</li><li>Paste your Claude API key in Settings, or choose the free mode. Then press <code>⌃⌥S</code> over Logic and ask something.</li></ol></details>
+  <details><summary>What's a Claude API key and how do I get one?</summary><p>It's how the app pays Anthropic for each answer. Sign in at console.anthropic.com, add a few dollars of credit under Billing, then create a key under API Keys and paste it into Sonic Sidekick's Settings. A Claude.ai chat subscription doesn't include API use; it's billed separately.</p></details>
+  <details><summary>Is there a monthly fee?</summary><p>No. You pay $50 once for the app. If you use Claude for answers, Anthropic bills your own account for what you use (usually a cent or a few cents per question). Free mode costs nothing per question.</p></details>
+  <details><summary>What gets sent, and where?</summary><p>Only what you ask with: your question and any screenshot or mix measurements, sent to Anthropic when you press send. Mix checks measure your bounce on your Mac; the audio file itself is never uploaded. In free mode nothing leaves your Mac. The Machmaster link stays on your Mac too.</p></details>
+  <details><summary>Does it change my session by itself?</summary><p>Only when you ask. It never clicks around in Logic. It can play MIDI into the track you've selected when you press Play, and turn Machmaster's knobs when you ask it to master or fix something, with an Undo button for every change.</p></details>
+  <details><summary>Do I need Machmaster?</summary><p>No. Everything except Machmaster control works on its own. If you have Machmaster, update to 1.5 or later and Sidekick can drive it.</p></details>
+  <details><summary>How many Macs can I use it on?</summary><p>Two. If you replace a Mac, reply to your Gumroad receipt email and we'll free up a spot.</p></details>
+  <details><summary>Does it work on Windows?</summary><p>Not yet. Sonic Sidekick is Mac-only for now.</p></details>
+  <details><summary>Can I get a refund?</summary><p>All sales are final, so check the specs and questions above before you buy.</p></details>
+ </div>
+</div></section>
+
+<section class="wrap final" id="buy">
+ <h2>Get Sonic Sidekick</h2>
+ <p>Machmaster's AI companion and your co-producer. One payment, two Macs.</p>
+ <span class="price">$50</span>
+ <a class="btn primary" href="#buy" data-buy>Buy Sonic Sidekick</a>
+</section>
+
+<footer><div class="wrap">
+ <span>© 2026 Sounding Sonics</span>
+ <span><a href="/">More from Sounding Sonics</a> · <a href="/machmaster/">Machmaster</a> · <a href="/supersonic/">Supersonic</a> · <a href="/dubcassette/">Dubcassette</a> · <a href="https://www.instagram.com/soundingsonics/" target="_blank" rel="noopener">Instagram</a></span>
+</div></footer>
+
+<script>
+const BUY_URL = "";   // Gumroad checkout link
+document.querySelectorAll('[data-buy]').forEach(a => { if (BUY_URL) { a.href = BUY_URL; a.target = '_blank'; a.rel = 'noopener'; } });
+
+/* ---- the panel mock ---- */
+const logo = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#ff8c2e"><rect x="3" y="10" width="2.2" height="4" rx="1.1"/><rect x="7" y="7" width="2.2" height="10" rx="1.1"/><rect x="11" y="4" width="2.2" height="16" rx="1.1"/><rect x="15" y="8" width="2.2" height="8" rx="1.1"/><rect x="19" y="10.5" width="2.2" height="3" rx="1.1"/></g></svg>';
+const arrange = `<svg viewBox="0 0 260 120" width="100%" style="display:block;background:#1b1b1d"><g font-family="Inter Tight,Arial" font-size="7" fill="#9aa">
+ <text x="4" y="18">Drums</text><text x="4" y="42">808</text><text x="4" y="66">Keys</text><text x="4" y="90">Vox Chop</text></g>
+ <g><rect x="44" y="8" width="210" height="16" rx="2" fill="#3c7fd9"/><rect x="44" y="32" width="150" height="16" rx="2" fill="#2fae6b"/>
+ <rect x="44" y="56" width="210" height="16" rx="2" fill="#c7962f"/><rect x="150" y="80" width="40" height="16" rx="2" fill="#a05ad0"/></g>
+ <line x1="44" y1="104" x2="254" y2="104" stroke="#444"/><g fill="#666" font-size="6" font-family="Arial"><text x="44" y="114">1</text><text x="96" y="114">5</text><text x="149" y="114">9</text><text x="201" y="114">13</text></g></svg>`;
+const scenes = {
+ finish: { fields: ['92', 'F minor', 'late-night R&B'], machmaster: false, steps: [
+  ['u', `<div class="shot">${arrange}</div>`],
+  ['u', `<div class="msg-u">What's missing to finish this beat?</div>`],
+  ['a', `<div class="msg-a">It's one 16-bar loop, so it never lifts. Three moves:<br>• <b>Arrange:</b> 4-bar intro (keys only), 8-bar verse, then drop the 808 out for bar 16 before the hook.<br>• <b>Vox Chop</b> only hits bars 9–12. Repeat it every 4 bars in the hook and pan it 30% left.<br>• Add a <b>counter-melody</b> an octave up on bars 9–16 so the hook feels bigger.</div>`],
+  ['a', `<div class="card"><div class="h">🎹 Hook counter-melody</div><div class="s">Load a soft pluck. F minor, 92 BPM</div><div class="chips"><span class="chip">▶ Play into Logic</span><span class="chip">⏺ Record</span></div></div>`]]},
+ midi: { fields: ['140', 'G minor', 'trap'], machmaster: false, steps: [
+  ['u', `<div class="msg-u">Give me a bouncy trap drum groove with rolling hats</div>`],
+  ['a', `<div class="card"><div class="h">🎹 Bounce drums · 2 bars</div><div class="s">Load Drum Machine Designer. Hats roll into the snare on beat 4.</div><div class="chips"><span class="chip">▶ Play into Logic</span><span class="chip">⏺ Record</span><span class="chip">140 BPM</span></div></div>`],
+  ['a', `<div class="msg-a">Kick on 1 and the "and" of 2, snare on 3, hats in 8ths with <b>16th and 32nd rolls</b> before the snare, and velocities from 70 to 110 so it breathes. Want an 808 that follows the kick?</div>`],
+  ['u', `<div class="msg-u">Yes, glide on the last note</div>`],
+  ['a', `<div class="card"><div class="h">🎹 808 follows kick · 2 bars</div><div class="s">Turn glide on in your 808 sampler for the last note.</div><div class="chips"><span class="chip">▶ Play into Logic</span><span class="chip">⏺ Record</span></div></div>`]]},
+ mix: { fields: ['92', 'F minor', 'R&B'], machmaster: false, steps: [
+  ['u', `<div class="msg-u">Mix check: Night Drive v3.wav</div>`],
+  ['a', `<div class="card"><div class="h">〰 Night Drive v3.wav</div><div class="meters"><div>LOUDNESS<b>−17.8 LUFS</b></div><div>TRUE PEAK<b>−0.2 dBTP</b></div><div>DYNAMICS<b>17.6 dB PLR</b></div><div>LOW END MONO<b>0.71 corr</b></div></div>
+   <div class="bars"><div>Sub<i style="width:58%"></i></div><div>Bass<i style="width:74%"></i></div><div>Mud zone<i style="width:81%"></i></div><div>Mids<i style="width:66%"></i></div><div>Presence<i style="width:41%"></i></div><div>Air<i style="width:24%"></i></div></div></div>`],
+  ['a', `<div class="msg-a"><b>Verdict:</b> a good unmastered mix with a muddy low-mid and a wide low end.<br>• Cut <b>300 Hz by 2.5 dB</b> (Q 1.2) on the keys bus.<br>• The low end is only 0.71 mono: make everything <b>below 120 Hz mono</b>.<br>• True peak is −0.2 dBTP, so leave headroom: pull the master fader down 3 dB before mastering.</div>`]]},
+ master: { fields: ['92', 'F minor', 'R&B'], machmaster: true, steps: [
+  ['u', `<div class="msg-u">Master this for streaming</div>`],
+  ['a', `<div class="msg-a">Machmaster reads <b>−18.4 LUFS</b> with peaks at −0.3 dBTP. Bringing it to about −14 for streaming with a clean ceiling:</div>`],
+  ['a', `<div class="card"><div class="h">◎ Changed in Machmaster <span class="chip" style="margin-left:auto">Undo</span></div><div class="mono">Low Shelf Gain: 0.00 → +1.0 dB<br>Low Mid Gain: 0.00 → −1.5 dB<br>Imager On · Width Low: 1.00 → 0%<br>Maximizer Gain: 0.00 → +4.5 dB<br>Ceiling: −1.0 dB · True Peak: On</div></div>`],
+  ['u', `<div class="msg-u">check it</div>`],
+  ['a', `<div class="msg-a">Now <b>−14.2 LUFS</b>, true peak <b>−1.1 dBTP</b>, low end mono. You're in range for streaming. If you want it punchier, I can add a touch of Tape exciter on the highs.</div>`]]}
+};
+
+function render(el, key, animate) {
+  const s = scenes[key];
+  el.innerHTML = `<div class="p-top"><div class="p-dots"><i></i><i></i><i></i></div>
+   <div class="p-title">${logo}Sonic Sidekick <span class="badge">CLAUDE</span>${s.machmaster ? '<span class="badge"><span class="dot"></span>MACHMASTER</span>' : ''}</div>
+   <div class="p-fields"><span>BPM<b>${s.fields[0]}</b></span><span>Key<b>${s.fields[1]}</b></span><span style="flex:1">Vibe<b>${s.fields[2]}</b></span></div></div>
+   <div class="p-body"></div>
+   <div class="p-foot"><span class="p-in">Ask, or tell it what you want…</span><span style="color:#ff8c2e;font-size:18px">⬆</span></div>`;
+  const body = el.querySelector('.p-body');
+  const still = !animate || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0, token = (el._token = (el._token || 0) + 1);
+  const next = () => {
+    if (token !== el._token || i >= s.steps.length) return;
+    const [who, html] = s.steps[i++];
+    if (who === 'a' && !still) {
+      const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>'; body.appendChild(t);
+      setTimeout(() => { if (token !== el._token) return; t.remove(); add(html); setTimeout(next, 700); }, 900);
+    } else { add(html); still ? next() : setTimeout(next, 600); }
+  };
+  const add = html => { const d = document.createElement('div'); d.innerHTML = html; const n = d.firstElementChild; if (!still) n.classList.add('reveal'); body.appendChild(n); };
+  next();
+}
+
+// hero: cycle through scenes; demo: driven by the tabs
+const order = ['finish', 'midi', 'mix', 'master'];
+let heroI = 0;
+const hero = document.getElementById('panel');
+render(hero, order[0], true);
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+  setInterval(() => { heroI = (heroI + 1) % order.length; render(hero, order[heroI], true); }, 9000);
+
+const tabs = [...document.querySelectorAll('.tab')];
+const demo = document.getElementById('panel2');
+function pick(t) { tabs.forEach(x => x.setAttribute('aria-selected', x === t ? 'true' : 'false')); render(demo, t.dataset.scene, true); }
+tabs.forEach(t => t.addEventListener('click', () => pick(t)));
+pick(tabs[3]);
+</script>
+</body>
+</html>
