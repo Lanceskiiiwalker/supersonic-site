@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sonic Sidekick: AI Producer Assistant for Logic Pro on Mac | Sounding Sonics</title>
-<meta name="description" content="Sonic Sidekick is Machmaster's AI companion and a co-producer in your Mac's menu bar: it masters with Machmaster for you, and helps you create tracks from scratch with ideas, sound design and MIDI that plays straight into Logic.">
+<meta name="description" content="Sonic Sidekick is Machmaster's AI companion and a co-producer in your Mac's menu bar: it masters with Machmaster for you, designs sounds in Supersonic, and helps you create tracks from scratch with ideas, sound design and MIDI that plays straight into Logic.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sonic Sidekick: a producer in your menu bar">
-<meta property="og:description" content="Machmaster's AI companion and your co-producer. It turns Machmaster's knobs for you, and helps you build tracks with ideas, sound design and MIDI that plays into Logic.">
+<meta property="og:description" content="Machmaster's AI companion and your co-producer. It turns Machmaster's and Supersonic's knobs for you, and helps you build tracks with ideas, sound design and MIDI that plays into Logic.">
 <meta property="og:image" content="https://www.soundingsonics.com/sonic-sidekick/og-image.png">
 <meta property="og:url" content="https://www.soundingsonics.com/sonic-sidekick/">
 <link rel="canonical" href="https://www.soundingsonics.com/sonic-sidekick/">
@@ -129,6 +129,7 @@ img{max-width:100%}
 .c{border-radius:16px;padding:20px;box-shadow:inset 0 0 0 1.5px var(--tline)}
 .c .n{font-size:30px;font-weight:600;letter-spacing:-.02em}
 .c p{margin:6px 0 0;color:var(--sub);font-size:14.5px}
+@media (min-width:860px){.cost.four{grid-template-columns:repeat(2,1fr)}}
 
 /* specs + faq */
 .specs{display:grid;gap:0;margin-top:22px;border-top:1px solid var(--tline)}
@@ -203,9 +204,10 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
 </header>
 
 <section class="sec" id="ways"><div class="wrap">
- <h2>Three ways to use it</h2>
- <div class="cost">
+ <h2>Four ways to use it</h2>
+ <div class="cost four">
   <div class="c"><div class="n" style="font-size:24px">With Machmaster</div><p>Machmaster's companion. Ask "master this for streaming" or "louder but clean" and Sidekick reads Machmaster's loudness meters, sets the EQ, dynamics, imager and maximizer, then checks the result. Every move has Undo.</p></div>
+  <div class="c"><div class="n" style="font-size:24px">With Supersonic</div><p>Your sound designer. Ask for "a dark, glassy pluck" or "punchier bass" and Sidekick picks the engine and preset, shapes the operators, envelopes and Warp pad, then checks the result with Supersonic's listen meter. Every move has Undo.</p></div>
   <div class="c"><div class="n" style="font-size:24px">On its own</div><p>A co-producer for building tracks. Screenshot your session and ask what's missing, get patch recipes for the synth on screen, and drop in drums, chords, basslines and melodies that play straight into Logic.</p></div>
   <div class="c"><div class="n" style="font-size:24px">Before you master</div><p>Drop a bounce for a mix check: loudness, true peak, dynamics, tonal balance and stereo, measured on your Mac, with exact fixes for what's off.</p></div>
  </div>
@@ -219,6 +221,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
    <button class="tab" role="tab" data-scene="finish"><b>Finish the beat</b><span>Press <kbd>⌃⌥S</kbd>, drag over your arrange window, and ask what's missing.</span></button>
    <button class="tab" role="tab" data-scene="midi"><b>Get MIDI that plays into Logic</b><span>Ask for drums, chords or a bassline. Hit Play into Logic and it plays on your selected track.</span></button>
    <button class="tab" role="tab" data-scene="mix"><b>Check your mix</b><span>Drop a bounce on the panel. It measures loudness, peaks, tone and stereo, then gives exact fixes.</span></button>
+   <button class="tab" role="tab" data-scene="synth"><b>Design a sound in Supersonic</b><span>Describe the sound. Sidekick builds the patch, listens to it, and fine-tunes.</span></button>
    <button class="tab" role="tab" data-scene="master"><b>Master with Machmaster</b><span>With Machmaster open, Sidekick reads its meters and turns the knobs itself, with Undo.</span></button>
    <p class="note">Example session for illustration. Answers depend on your track.</p>
   </div>
@@ -234,6 +237,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
   <div class="f"><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="16" rx="2"/><path d="M10 8v10M16 8v10M22 8v10"/></svg><b>MIDI straight into Logic</b><p>Drum grooves, chord progressions, basslines and melodies in your tempo and key. Play them into the selected track, record in one click, or drag the file in.</p></div>
   <div class="f"><svg viewBox="0 0 32 32"><path d="M4 22h4V12H4zM11 22h4V6h-4zM18 22h4V15h-4zM25 22h4V9h-4z"/><path d="M3 26h26"/></svg><b>Mix check</b><p>Drop a bounce and it measures loudness (LUFS), true peak, dynamics, tonal balance, stereo width and low-end mono, then tells you what to fix and by how much.</p></div>
   <div class="f"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/><path d="M16 16l5-5M16 6v3M26 16h-3M16 26v-3M6 16h3"/></svg><b>Turns Machmaster's knobs</b><p>With Machmaster 1.5 or later open, ask "master this for streaming" and Sidekick sets EQ, dynamics and the limiter, reads the meters, and adjusts again. Every change has Undo.</p></div>
+  <div class="f"><svg viewBox="0 0 32 32"><path d="M4 16c3-8 6-8 8 0s5 8 8 0 5-8 8 0"/></svg><b>Designs sounds in Supersonic</b><p>With Supersonic 0.6 or later open, describe a sound and Sidekick builds it: engine, preset, FM operators or phase-distortion lines, envelopes, effects and Warp. Then it listens and adjusts. Every change has Undo.</p></div>
   <div class="f"><svg viewBox="0 0 32 32"><path d="M6 20a10 10 0 1 1 20 0"/><path d="M16 20l6-7"/><path d="M4 26h24"/></svg><b>Knows your tools</b><p>Patch recipes for Alchemy, Retro Synth, ES2, Sculpture and Drum Machine Designer, plus Supersonic and Machmaster settings, and arrangement plans with bar counts.</p></div>
  </div>
 </div></section>
@@ -255,6 +259,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
   <div><dt>Mac</dt><dd>macOS 13 Ventura or later, Apple silicon and Intel</dd></div>
   <div><dt>DAW</dt><dd>Made for Logic Pro. Screenshots, advice, MIDI files and mix checks work with any DAW. Play into Logic uses a "Sonic Sidekick" MIDI input that any DAW can record.</dd></div>
   <div><dt>Machmaster control</dt><dd>Machmaster 1.5 or later, open in your session on the same Mac</dd></div>
+  <div><dt>Supersonic control</dt><dd>Supersonic 0.6 or later, open in your session on the same Mac</dd></div>
   <div><dt>AI</dt><dd>Your Claude API key (stored in your Mac's Keychain), or free local mode via Ollama</dd></div>
   <div><dt>Shortcuts</dt><dd><code>⌃⌥S</code> capture and ask · <code>⌃⌥V</code> talk</dd></div>
   <div><dt>License</dt><dd>Two Macs per purchase. Signed and notarized by Apple.</dd></div>
@@ -269,7 +274,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--text)}
   <details><summary>Is there a monthly fee?</summary><p>No. You pay $50 once for the app. If you use Claude for answers, Anthropic bills your own account for what you use (usually a cent or a few cents per question). Free mode costs nothing per question.</p></details>
   <details><summary>What gets sent, and where?</summary><p>Only what you ask with: your question and any screenshot or mix measurements, sent to Anthropic when you press send. Mix checks measure your bounce on your Mac; the audio file itself is never uploaded. In free mode nothing leaves your Mac. The Machmaster link stays on your Mac too.</p></details>
   <details><summary>Does it change my session by itself?</summary><p>Only when you ask. It never clicks around in Logic. It can play MIDI into the track you've selected when you press Play, and turn Machmaster's knobs when you ask it to master or fix something, with an Undo button for every change.</p></details>
-  <details><summary>Do I need Machmaster?</summary><p>No. Everything except Machmaster control works on its own. If you have Machmaster, update to 1.5 or later and Sidekick can drive it.</p></details>
+  <details><summary>Do I need Machmaster or Supersonic?</summary><p>No. Everything else works on its own. If you have Machmaster (1.5 or later) Sidekick can master with it, and if you have Supersonic (0.6 or later) it can design sounds in it.</p></details>
   <details><summary>How many Macs can I use it on?</summary><p>Two. If you replace a Mac, reply to your Gumroad receipt email and we'll free up a spot.</p></details>
   <details><summary>Does it work on Windows?</summary><p>Not yet. Sonic Sidekick is Mac-only for now.</p></details>
   <details><summary>Can I get a refund?</summary><p>All sales are final, so check the specs and questions above before you buy.</p></details>
@@ -316,7 +321,13 @@ const scenes = {
   ['a', `<div class="card"><div class="h">〰 Night Drive v3.wav</div><div class="meters"><div>LOUDNESS<b>−17.8 LUFS</b></div><div>TRUE PEAK<b>−0.2 dBTP</b></div><div>DYNAMICS<b>17.6 dB PLR</b></div><div>LOW END MONO<b>0.71 corr</b></div></div>
    <div class="bars"><div>Sub<i style="width:58%"></i></div><div>Bass<i style="width:74%"></i></div><div>Mud zone<i style="width:81%"></i></div><div>Mids<i style="width:66%"></i></div><div>Presence<i style="width:41%"></i></div><div>Air<i style="width:24%"></i></div></div></div>`],
   ['a', `<div class="msg-a"><b>Verdict:</b> a good unmastered mix with a muddy low-mid and a wide low end.<br>• Cut <b>300 Hz by 2.5 dB</b> (Q 1.2) on the keys bus.<br>• The low end is only 0.71 mono: make everything <b>below 120 Hz mono</b>.<br>• True peak is −0.2 dBTP, so leave headroom: pull the master fader down 3 dB before mastering.</div>`]]},
- master: { fields: ['92', 'F minor', 'R&B'], machmaster: true, steps: [
+ synth: { fields: ['92', 'F minor', 'late-night R&B'], badge: 'SUPERSONIC', steps: [
+  ['u', `<div class="msg-u">Make me a dark, glassy pluck for the hook</div>`],
+  ['a', `<div class="msg-a">Starting from <b>Glass Bell</b> on the FM6 engine and pulling it darker and shorter:</div>`],
+  ['a', `<div class="card"><div class="h">◎ Changed in Supersonic <span class="chip" style="margin-left:auto">Undo</span></div><div class="mono">Loaded preset: Glass Bell<br>Op1 Decay: 5.00 → 0.80 s · Sustain 0<br>Op2 Ratio: x3.5 → x14 · Level 0.62 → 0.38<br>Tone: 9000 → 2600 Hz · Reverb 0.22 → 0.35<br>Warp Space: 0.50 → 0.42</div></div>`],
+  ['u', `<div class="msg-u">check it</div>`],
+  ['a', `<div class="msg-a">Listen meter: brightness centre <b>760 Hz</b>, almost nothing above 3.5 kHz, peaks at −7 dB. Dark but still glassy on the attack. Want it to ring a little longer?</div>`]]},
+ master: { fields: ['92', 'F minor', 'R&B'], badge: 'MACHMASTER', steps: [
   ['u', `<div class="msg-u">Master this for streaming</div>`],
   ['a', `<div class="msg-a">Machmaster reads <b>−18.4 LUFS</b> with peaks at −0.3 dBTP. Bringing it to about −14 for streaming with a clean ceiling:</div>`],
   ['a', `<div class="card"><div class="h">◎ Changed in Machmaster <span class="chip" style="margin-left:auto">Undo</span></div><div class="mono">Low Shelf Gain: 0.00 → +1.0 dB<br>Low Mid Gain: 0.00 → −1.5 dB<br>Imager On · Width Low: 1.00 → 0%<br>Maximizer Gain: 0.00 → +4.5 dB<br>Ceiling: −1.0 dB · True Peak: On</div></div>`],
@@ -327,7 +338,7 @@ const scenes = {
 function render(el, key, animate) {
   const s = scenes[key];
   el.innerHTML = `<div class="p-top"><div class="p-dots"><i></i><i></i><i></i></div>
-   <div class="p-title">${logo}Sonic Sidekick <span class="badge">CLAUDE</span>${s.machmaster ? '<span class="badge"><span class="dot"></span>MACHMASTER</span>' : ''}</div>
+   <div class="p-title">${logo}Sonic Sidekick <span class="badge">CLAUDE</span>${s.badge ? '<span class="badge"><span class="dot"></span>' + s.badge + '</span>' : ''}</div>
    <div class="p-fields"><span>BPM<b>${s.fields[0]}</b></span><span>Key<b>${s.fields[1]}</b></span><span style="flex:1">Vibe<b>${s.fields[2]}</b></span></div></div>
    <div class="p-body"></div>
    <div class="p-foot"><span class="p-in">Ask, or tell it what you want…</span><span style="color:#ff8c2e;font-size:18px">⬆</span></div>`;
@@ -347,7 +358,7 @@ function render(el, key, animate) {
 }
 
 // hero: cycle through scenes; demo: driven by the tabs
-const order = ['finish', 'midi', 'mix', 'master'];
+const order = ['finish', 'midi', 'synth', 'mix', 'master'];
 let heroI = 0;
 const hero = document.getElementById('panel');
 render(hero, order[0], true);
@@ -358,7 +369,7 @@ const tabs = [...document.querySelectorAll('.tab')];
 const demo = document.getElementById('panel2');
 function pick(t) { tabs.forEach(x => x.setAttribute('aria-selected', x === t ? 'true' : 'false')); render(demo, t.dataset.scene, true); }
 tabs.forEach(t => t.addEventListener('click', () => pick(t)));
-pick(tabs[3]);
+pick(tabs[tabs.length - 1]);
 </script>
 </body>
 </html>
