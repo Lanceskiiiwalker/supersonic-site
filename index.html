@@ -206,7 +206,7 @@ footer a:hover{color:var(--text)}
 <section class="sec" id="plugins" style="padding-top:24px"><div class="wrap">
  <div class="sec-head">
   <div><h2>Plugins</h2><p class="sub">AU, VST3 and Standalone for macOS, plus Sonic Sidekick, a producer assistant app. Each page has a demo.</p></div>
-  <span class="count" id="count">2 plugins available</span>
+  <span class="count" id="count">4 plugins available</span>
  </div>
  <!-- THE PLUGIN LIST. To add a plugin, copy one <article class="card"> and edit it (see README). -->
  <div class="grid" id="grid">
@@ -281,7 +281,7 @@ footer a:hover{color:var(--text)}
 
 <script>
 /* plugin cards are plain HTML in #grid; keep the count in step with them */
-const live=document.querySelectorAll('#grid .card:not(.soon):not(.app)').length;
+const live=document.querySelectorAll('#grid .card:not(.soon)').length;
 document.getElementById('count').textContent=live+(live===1?' plugin':' plugins')+' available';
 
 /* ---------- ambient sky (hero + coming-soon card) ---------- */
