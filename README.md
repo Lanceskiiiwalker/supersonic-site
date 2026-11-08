@@ -6,6 +6,8 @@ The Sounding Sonics website, served by GitHub Pages at https://www.soundingsonic
 index.html            Home page (hub): hero, plugin grid, about
 og-image.png          Link preview image for the home page
 favicon.svg           Browser tab icon
+assets/sticky-cta.js  Sticky "Try free / Buy" bar on every page (settings are on the
+                        <script> tag at the bottom of each page)
 CNAME                 Custom domain (www.soundingsonics.com), don't delete
 machmaster/           Machmaster page -> soundingsonics.com/machmaster/
                         (same files as supersonic/; Gumroad checkout link is BUY_URL near the bottom of index.html)
@@ -30,4 +32,6 @@ supersonic/           Supersonic page -> soundingsonics.com/supersonic/
 4. SEO for the new page: give it a `<link rel="canonical">`, copy the Product
    `application/ld+json` block from `supersonic/index.html` and edit it, add the page
    to `sitemap.xml`, and add its URL to the ItemList block in the home page `<head>`.
-5. Commit. The site updates about a minute later.
+5. Add the sticky Try/Buy bar: copy the `sticky-cta.js` <script> line from the bottom of
+   `dubcassette/index.html` and change the name, price, Gumroad link and colours.
+6. Commit. The site updates about a minute later.

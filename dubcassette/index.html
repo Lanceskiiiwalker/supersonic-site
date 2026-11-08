@@ -326,7 +326,7 @@ select.lcd-sel {
   </div>
   <div>
    <p class="p-lede" style="margin-top:0">A cassette tape delay with a tape-smeared reverb. Four tape speeds, three tape types, varispeed from half to double speed, and a brake that stops the tape dead.</p>
-   <div class="p-ctas"><a class="p-buy" href="#buy" data-buy>Buy for $60</a><a class="p-ghost" href="#demo">Play it in your browser</a></div>
+   <div class="p-ctas"><a class="p-buy" href="#buy" data-buy>Buy for $60</a><a class="p-ghost" href="#demo">▶ Play it free, right here</a></div>
    <div class="p-facts"><span><b>AU · VST3 · Standalone</b></span><span>macOS 11+</span><span>Apple silicon + Intel</span></div>
   </div>
   <div class="p-reels"><canvas id="heroReels" aria-hidden="true"></canvas></div>
@@ -1086,5 +1086,6 @@ document.querySelectorAll('[data-buy]').forEach(a => { if (BUY_URL) { a.href = B
   addEventListener('resize', () => { if (still) requestAnimationFrame(frame); });
 })();
 </script>
+<script src="/assets/sticky-cta.js" data-name="Dubcassette" data-price="$60" data-buy="https://lanceskiiiwalker.gumroad.com/l/dubcassette" data-try="#demo" data-try-label="Play free" data-color="var(--oxide)" data-ink="#1a0d06" defer></script>
 </body>
 </html>
